@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,16 +19,16 @@
   <h2>Before Anything… 💌</h2>
   <p>What should I call you today?</p>
   <input type="text" id="herName" placeholder="Type your name here ❤️">
-  <button onclick="saveName()">Continue</button>
+  <button id="continueBtn">Continue</button>
 </div>
 
 <!-- STEP 2 -->
 <div class="step" id="step-2">
   <h2>Perfect Sarakki Lake Date? 🌊</h2>
   <div class="options">
-    <button onclick="selectAnswer('date','run')">Morning Run 🏃</button>
-    <button onclick="selectAnswer('date','badminton')">Badminton 🏸</button>
-    <button onclick="selectAnswer('date','walk')">Peaceful Walk 🌅</button>
+    <button data-question="date" data-value="run">Morning Run 🏃</button>
+    <button data-question="date" data-value="badminton">Badminton 🏸</button>
+    <button data-question="date" data-value="walk">Peaceful Walk 🌅</button>
   </div>
 </div>
 
@@ -36,9 +36,9 @@
 <div class="step" id="step-3">
   <h2>Dinner Plan? 🍽️</h2>
   <div class="options">
-    <button onclick="selectAnswer('food','mushroom')">Mushroom Only 🍄</button>
-    <button onclick="selectAnswer('food','ghar')">Simple Ghar Ka Khana 🏡</button>
-    <button onclick="selectAnswer('food','chocolate')">Chocolate Date 🍫</button>
+    <button data-question="food" data-value="mushroom">Mushroom Only 🍄</button>
+    <button data-question="food" data-value="ghar">Simple Ghar Ka Khana 🏡</button>
+    <button data-question="food" data-value="chocolate">Chocolate Date 🍫</button>
   </div>
 </div>
 
@@ -46,25 +46,19 @@
 <div class="step" id="step-4">
   <h2>Evening Scene? 🎬</h2>
   <div class="options">
-    <button onclick="selectAnswer('evening','series')">Watch Series Together 👀</button>
-    <button onclick="selectAnswer('evening','sing')">You Sing 🎵</button>
-    <button onclick="selectAnswer('evening','deep')">Deep Talks 🌌</button>
+    <button data-question="evening" data-value="series">Watch Series Together 👀</button>
+    <button data-question="evening" data-value="sing">You Sing 🎵</button>
+    <button data-question="evening" data-value="deep">Deep Talks 🌌</button>
   </div>
 </div>
 
-<!-- STEP 5 FINAL -->
+<!-- STEP 5 -->
 <div class="step" id="step-5">
   <h2 id="finalMessage"></h2>
-
-  <div class="proposal">
-    <p>You once said I never asked properly…</p>
-    <h1>Will You Be My Valentine? 💘</h1>
-
-    <div class="buttons">
-      <button class="yes" onclick="sayYes()">YES 💍</button>
-      <button class="no" onmouseover="moveButton(this)">No 🙈</button>
-    </div>
-  </div>
+  <p>You once said I never asked properly…</p>
+  <h1>Will You Be My Valentine? 💘</h1>
+  <button id="yesBtn">YES 💍</button>
+  <button id="noBtn">No 🙈</button>
 </div>
 
 </div>
