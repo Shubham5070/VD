@@ -1050,9 +1050,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   
-});
-
-  // Reaction game
+  // Reaction game (MOVED INSIDE DOMContentLoaded)
   let reactionStartTime = 0;
   let reactionTimeout = null;
   let reactionCompleted = false;
@@ -1169,4 +1167,5 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     }, waitTime);
   }
-;
+
+});
