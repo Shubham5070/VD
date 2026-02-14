@@ -50,10 +50,34 @@
   </div>
 </div>
 
+<!-- SECTION 1 INTRO -->
+<div class="step" id="section-1-intro">
+  <div class="section-badge">Section 1 📋</div>
+  <div class="emoji-float">✨</div>
+  <h2 class="glow-text">Getting to Know You</h2>
+  <div class="intro-box">
+    <p class="intro-text">
+      Just a few simple questions to understand<br>
+      what makes you... well, <strong>you</strong>! 💫
+    </p>
+    <div class="rules-box">
+      <p class="rules-title">📜 Rules:</p>
+      <p class="rule-item">✓ Answer honestly (or not 😏)</p>
+      <p class="rule-item">✓ No wrong answers</p>
+      <p class="rule-item">✓ Just have fun with it!</p>
+    </div>
+  </div>
+  <button class="btn-primary" id="startSection1">
+    <span>Let's Start! 🚀</span>
+    <div class="btn-shine"></div>
+  </button>
+</div>
+
 <!-- STEP 2: Calm Place -->
 <div class="step" id="step-2">
   <div class="emoji-float">🌊</div>
   <h2 class="glow-text">Pick your calm place</h2>
+  <p class="playful-text">5 feet something ki preference kya hai? 😏</p>
   <div class="options">
     <button class="option-btn">
       <span class="emoji">🌙</span>
@@ -128,6 +152,88 @@
       <span class="text">Consistency</span>
     </button>
   </div>
+</div>
+
+<!-- SECTION 2 INTRO: Fun Quiz -->
+<div class="step" id="section-2-intro">
+  <div class="section-badge">Section 2 🧠</div>
+  <div class="emoji-float">🎯</div>
+  <h2 class="glow-text">The Confusion Quiz!</h2>
+  <div class="intro-box">
+    <p class="intro-text">
+      Time to test that sharp brain of yours! 😏<br>
+      <strong>20 random questions</strong> that'll make you go "Wait, what?" 🤔
+    </p>
+    <div class="rules-box">
+      <p class="rules-title">📜 Rules:</p>
+      <p class="rule-item">✓ 20 questions, all MCQ</p>
+      <p class="rule-item">✓ Some are tricky, some are silly</p>
+      <p class="rule-item">✓ No Google allowed! 📵</p>
+      <p class="rule-item">✓ Your score will be... interesting 😂</p>
+    </div>
+  </div>
+  <button class="btn-primary" id="startQuiz">
+    <span>Bring It On! 💪</span>
+    <div class="btn-shine"></div>
+  </button>
+</div>
+
+<!-- QUIZ QUESTION STEP -->
+<div class="step" id="quiz-step">
+  <div class="quiz-header">
+    <div class="quiz-progress">
+      Question <span id="currentQ">1</span>/20
+    </div>
+    <div class="quiz-timer">⏱️ <span id="quizTimer">0:00</span></div>
+  </div>
+  
+  <div class="quiz-question-box">
+    <p class="quiz-question" id="quizQuestion"></p>
+    <div class="quiz-options" id="quizOptions">
+      <!-- Options will be inserted here -->
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ RESULT -->
+<div class="step" id="quiz-result">
+  <div class="emoji-float">📊</div>
+  <h2 class="glow-text">Quiz Results!</h2>
+  <div class="result-box">
+    <div class="score-display">
+      <span class="score-number" id="finalScore">0</span>
+      <span class="score-total">/20</span>
+    </div>
+    <p class="result-message" id="resultMessage"></p>
+    <div class="result-emoji" id="resultEmoji">🎭</div>
+  </div>
+  <button class="btn-primary" id="continueAfterQuiz">
+    <span>Continue 😌</span>
+    <div class="btn-shine"></div>
+  </button>
+</div>
+
+<!-- SECTION 3 INTRO: Games -->
+<div class="step" id="section-3-intro">
+  <div class="section-badge">Section 3 🎮</div>
+  <div class="emoji-float">🎪</div>
+  <h2 class="glow-text">Game Time!</h2>
+  <div class="intro-box">
+    <p class="intro-text">
+      Let's see how well we vibe together! 💕<br>
+      A few fun games to lighten things up 😄
+    </p>
+    <div class="rules-box">
+      <p class="rules-title">📜 Rules:</p>
+      <p class="rule-item">✓ Quick games, nothing serious</p>
+      <p class="rule-item">✓ Just for fun and laughs</p>
+      <p class="rule-item">✓ Go with your gut feeling!</p>
+    </div>
+  </div>
+  <button class="btn-primary" id="startGames">
+    <span>Let's Play! 🎮</span>
+    <div class="btn-shine"></div>
+  </button>
 </div>
 
 <!-- STEP 6: Would You Rather Game -->
