@@ -496,6 +496,67 @@ input:focus + .input-glow {
   border-radius: 15px;
 }
 
+/* Shayari reward box */
+.shayari-reward {
+  margin-top: 25px;
+  opacity: 0;
+  animation: shayariReveal 1s ease forwards;
+}
+
+@keyframes shayariReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.shayari-box {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 160, 122, 0.15));
+  border: 2px solid rgba(255, 160, 122, 0.4);
+  border-radius: 20px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shayari-box::before {
+  content: "🎉";
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.shayari-text {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: var(--text-dark);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Name selection buttons */
+.name-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 245, 247, 0.95));
+  border: 2px solid rgba(255, 107, 157, 0.3);
+}
+
+.name-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 240, 245, 0.95), rgba(255, 235, 240, 0.95));
+  border-color: var(--primary);
+}
+
 /* Steps animation */
 .step {
   display: none;
@@ -566,13 +627,17 @@ input:focus + .input-glow {
 }
 
 .final-name {
-  font-size: 36px;
-  margin-bottom: 30px;
+  font-size: 32px;
+  margin-bottom: 20px;
   background: linear-gradient(135deg, var(--primary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradientText 3s ease infinite;
+}
+
+#displayName {
+  font-family: 'Pacifico', cursive;
 }
 
 @keyframes gradientText {
@@ -581,7 +646,26 @@ input:focus + .input-glow {
 }
 
 .message-content {
-  margin: 30px 0;
+  margin: 25px 0;
+}
+
+.special-msg {
+  font-family: 'Caveat', cursive;
+  font-size: 19px;
+  color: var(--text-dark);
+  line-height: 1.5;
+  margin: 15px 0;
+  font-weight: 600;
+  opacity: 0;
+  animation: revealText 0.8s ease forwards;
+}
+
+.special-msg:nth-child(1) { animation-delay: 0.3s; }
+.special-msg:nth-child(2) { animation-delay: 0.8s; }
+
+.special-msg strong {
+  color: var(--primary);
+  font-size: 20px;
 }
 
 .reveal-text {
@@ -609,8 +693,8 @@ input:focus + .input-glow {
 }
 
 .final-question {
-  font-size: 26px;
-  margin: 35px 0 15px;
+  font-size: 24px;
+  margin: 30px 0 12px;
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -620,10 +704,10 @@ input:focus + .input-glow {
 }
 
 .final-sub {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-light);
   font-style: italic;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .final-buttons {

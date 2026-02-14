@@ -71,40 +71,20 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(style);
   
-  // Name input
-  document.getElementById("continueBtn").addEventListener("click", function () {
-    let name = document.getElementById("herName").value.trim();
-    if (name === "") {
-      // Shake animation for empty input
-      const input = document.getElementById("herName");
-      input.style.animation = 'shake 0.5s';
-      setTimeout(() => input.style.animation = '', 500);
+  // Name selection
+  document.querySelectorAll('.name-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const selectedName = this.getAttribute('data-name');
+      answers.name = selectedName;
       
-      // Add shake keyframes
-      if (!document.getElementById('shake-style')) {
-        const shakeStyle = document.createElement('style');
-        shakeStyle.id = 'shake-style';
-        shakeStyle.textContent = `
-          @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-          }
-        `;
-        document.head.appendChild(shakeStyle);
-      }
+      // Add selected animation
+      this.style.transform = 'scale(1.1)';
+      this.style.background = 'linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(255, 160, 122, 0.3))';
       
-      return;
-    }
-    answers.name = name;
-    nextStep();
-  });
-  
-  // Allow Enter key for name input
-  document.getElementById("herName").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-      document.getElementById("continueBtn").click();
-    }
+      setTimeout(() => {
+        nextStep();
+      }, 400);
+    });
   });
   
   // Handle all option clicks (except memory game step)
@@ -204,59 +184,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = document.querySelector('.game-status');
     status.innerHTML = '🎉 Perfect! All matched! 🎉';
     status.style.animation = 'pulse 0.5s ease 3';
+    
+    // Show shayari reward
+    setTimeout(() => {
+      const shayariReward = document.getElementById('shayariReward');
+      shayariReward.style.display = 'block';
+    }, 800);
   }
   
   // Generate final personalized message
   function generateFinalMessage() {
-    let name = answers.name || "You";
+    let name = answers.name || "Swapna";
     
-    let message = name + ",\n\n";
-    message += "The more I talk to you, the more I realize something important.\n\n";
-    message += "You're calm but strong. Playful but serious where it matters.\n";
-    
-    if (answers.q5 && answers.q5.includes("Honesty")) {
-      message += "You value honesty deeply — and I don't want to ever take that lightly.\n";
-    }
-    
-    if (answers.q9 && answers.q9.includes("Grow")) {
-      message += "You believe in growing individually and together — and that's rare.\n";
-    }
-    
-    if (answers.q7 && answers.q7.includes("Saaf")) {
-      message += "Also... I will behave. Thoda. Maybe. 😌\n";
-    }
-    
-    message += "\nI don't want something rushed.\n";
-    message += "I don't want something casual.\n";
-    message += "I just want something real.\n\n";
-    message += "Steady. Honest. With you. 🤍";
-    
-    // Display with typing effect
-    typeMessage(message);
-  }
-  
-  function typeMessage(message) {
-    const element = document.getElementById("finalMessage");
-    element.innerText = '';
-    let i = 0;
-    
-    function type() {
-      if (i < message.length) {
-        element.innerText += message.charAt(i);
-        i++;
-        setTimeout(type, 30);
-      }
-    }
-    
-    type();
+    // Display name
+    document.getElementById('displayName').textContent = name;
   }
   
   // YES button with confetti
   document.getElementById("yesBtn").addEventListener("click", function () {
-    this.innerHTML = '<span>This just became official 🤍✨</span>';
+    this.innerHTML = '<span>Yeahhh! Let\'s do this 🎉✨</span>';
     this.style.background = 'linear-gradient(135deg, #ff6b9d, #c44569)';
     this.style.color = 'white';
-    this.style.transform = 'scale(1.1)';
+    this.style.transform = 'scale(1.05)';
     
     document.getElementById("noBtn").style.display = 'none';
     
@@ -266,10 +215,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add success message
     setTimeout(() => {
       const successMsg = document.createElement('p');
-      successMsg.textContent = '💕 Thank you for giving us a chance 💕';
+      successMsg.textContent = '💕 This is going to be amazing 💕';
       successMsg.style.cssText = `
         margin-top: 20px;
-        font-size: 18px;
+        font-size: 17px;
         color: var(--primary);
         font-weight: 600;
         animation: revealText 0.8s ease forwards;
