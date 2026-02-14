@@ -401,11 +401,14 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // Show step with animation
   function showStep(stepId) {
+    console.log('=== showStep called with:', stepId, '===');
     const allSteps = document.querySelectorAll(".step");
     
     // Check if transitioning between sections (show chopper)
     const currentActive = document.querySelector('.step.active');
     const currentId = currentActive ? currentActive.id : '';
+    
+    console.log('Transitioning from:', currentId, 'to:', stepId);
     
     let needsChopperTransition = false;
     let chopperText = '';
@@ -425,6 +428,8 @@ document.addEventListener("DOMContentLoaded", function () {
       chopperText = 'Final Questions 💕';
     }
     
+    console.log('Needs chopper:', needsChopperTransition);
+    
     if (needsChopperTransition) {
       // Fade out current step
       allSteps.forEach(s => {
@@ -442,8 +447,11 @@ document.addEventListener("DOMContentLoaded", function () {
         showChopperTransition(chopperText, () => {
           const newStep = document.getElementById(stepId);
           if (newStep) {
+            console.log('Activating step:', stepId);
             newStep.classList.add("active");
             initializeStep(stepId);
+          } else {
+            console.error('Step not found:', stepId);
           }
         });
       }, 450);
@@ -462,8 +470,11 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => {
         const newStep = document.getElementById(stepId);
         if (newStep) {
+          console.log('Activating step:', stepId);
           newStep.classList.add("active");
           initializeStep(stepId);
+        } else {
+          console.error('Step not found:', stepId);
         }
       }, 450);
     }
@@ -490,6 +501,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   function nextStep() {
+    console.log('=== nextStep called ===');
+    
     // Define the flow order
     const flowOrder = [
       'step-1',           // Name selection
@@ -518,9 +531,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentId = currentActive ? currentActive.id : 'step-1';
     const currentIndex = flowOrder.indexOf(currentId);
     
+    console.log('Current step:', currentId, 'Index:', currentIndex);
+    
     if (currentIndex < flowOrder.length - 1) {
       const nextId = flowOrder[currentIndex + 1];
+      console.log('Next step:', nextId);
       showStep(nextId);
+    } else {
+      console.log('No next step found!');
     }
   }
   
@@ -1041,15 +1059,22 @@ document.addEventListener("DOMContentLoaded", function () {
   let reactionInProgress = false;
   
   document.getElementById('reactionBtn').addEventListener('click', startReactionGame);
-  document.getElementById('continueAfterReaction').addEventListener('click', function() {
-    console.log('Continue clicked, reactionCompleted:', reactionCompleted);
-    if (reactionCompleted) {
-      // Force clear any remaining box interactions
-      const box = document.getElementById('reactionBox');
+  
+  document.getElementById('continueAfterReaction').addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Continue button clicked!');
+    
+    // Force clear any remaining box interactions
+    const box = document.getElementById('reactionBox');
+    if (box) {
       box.onclick = null;
       box.style.pointerEvents = 'none';
-      nextStep();
     }
+    
+    // Always proceed to next step
+    console.log('Calling nextStep...');
+    nextStep();
   });
   
   function startReactionGame() {
