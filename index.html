@@ -134,6 +134,69 @@
   </div>
 </div>
 
+<!-- STEP 4.5: Bike Question -->
+<div class="step" id="step-4-5">
+  <div class="emoji-float">🏍️</div>
+  <h2 class="glow-text">Bike rides! 🏍️</h2>
+  <p class="playful-text">How do you feel about them?</p>
+  <div class="options">
+    <button class="option-btn">
+      <span class="emoji">😍</span>
+      <span class="text">Love them!</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">😌</span>
+      <span class="text">They're nice</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">😰</span>
+      <span class="text">A bit scary</span>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 4.6: Food Preference -->
+<div class="step" id="step-4-6">
+  <div class="emoji-float">🍽️</div>
+  <h2 class="glow-text">Food mood?</h2>
+  <p class="playful-text">When stressed, you prefer...</p>
+  <div class="options">
+    <button class="option-btn">
+      <span class="emoji">🍫</span>
+      <span class="text">Something sweet</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🌶️</span>
+      <span class="text">Something spicy</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">☕</span>
+      <span class="text">Just chai/coffee</span>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 4.7: Late Night -->
+<div class="step" id="step-4-7">
+  <div class="emoji-float">🌙</div>
+  <h2 class="glow-text">Late night vibes</h2>
+  <p class="playful-text">Your ideal 2 AM looks like...</p>
+  <div class="options">
+    <button class="option-btn">
+      <span class="emoji">😴</span>
+      <span class="text">Already sleeping</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">📱</span>
+      <span class="text">Scrolling & texting</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🍿</span>
+      <span class="text">Movie/series marathon</span>
+    </button>
+  </div>
+</div>
+
 <!-- STEP 5: What Matters -->
 <div class="step" id="step-5">
   <div class="emoji-float">🤍</div>
@@ -162,14 +225,15 @@
   <div class="intro-box">
     <p class="intro-text">
       Time to test that sharp brain of yours! 😏<br>
-      <strong>20 random questions</strong> that'll make you go "Wait, what?" 🤔
+      <strong>10 random questions</strong> that'll make you go "Wait, what?" 🤔
     </p>
     <div class="rules-box">
       <p class="rules-title">📜 Rules:</p>
-      <p class="rule-item">✓ 20 questions, all MCQ</p>
-      <p class="rule-item">✓ Some are tricky, some are silly</p>
+      <p class="rule-item">✓ 10 questions, all MCQ</p>
+      <p class="rule-item">✓ 21 seconds per question ⏱️</p>
+      <p class="rule-item">✓ 3 hints available (but they'll tease you 😂)</p>
       <p class="rule-item">✓ No Google allowed! 📵</p>
-      <p class="rule-item">✓ Your score will be... interesting 😂</p>
+      <p class="rule-item">✓ Actual score will be shown (no cheating!)</p>
     </div>
   </div>
   <button class="btn-primary" id="startQuiz">
@@ -182,15 +246,25 @@
 <div class="step" id="quiz-step">
   <div class="quiz-header">
     <div class="quiz-progress">
-      Question <span id="currentQ">1</span>/20
+      Q <span id="currentQ">1</span>/10
     </div>
-    <div class="quiz-timer">⏱️ <span id="quizTimer">0:00</span></div>
+    <div class="quiz-question-timer">
+      ⏱️ <span id="questionTimer">21</span>s
+    </div>
   </div>
   
   <div class="quiz-question-box">
     <p class="quiz-question" id="quizQuestion"></p>
     <div class="quiz-options" id="quizOptions">
       <!-- Options will be inserted here -->
+    </div>
+    
+    <!-- Hint section -->
+    <div class="hint-section">
+      <button class="hint-btn" id="hintBtn">
+        💡 Use Hint (<span id="hintsLeft">3</span> left)
+      </button>
+      <p class="hint-text" id="hintText" style="display: none;"></p>
     </div>
   </div>
 </div>
@@ -202,7 +276,7 @@
   <div class="result-box">
     <div class="score-display">
       <span class="score-number" id="finalScore">0</span>
-      <span class="score-total">/20</span>
+      <span class="score-total">/10</span>
     </div>
     <p class="result-message" id="resultMessage"></p>
     <div class="result-emoji" id="resultEmoji">🎭</div>
@@ -220,14 +294,15 @@
   <h2 class="glow-text">Game Time!</h2>
   <div class="intro-box">
     <p class="intro-text">
-      Let's see how well we vibe together! 💕<br>
-      A few fun games to lighten things up 😄
+      Let's play some fun games! 💕<br>
+      Two quick games to test your skills 😄
     </p>
     <div class="rules-box">
-      <p class="rules-title">📜 Rules:</p>
-      <p class="rule-item">✓ Quick games, nothing serious</p>
-      <p class="rule-item">✓ Just for fun and laughs</p>
-      <p class="rule-item">✓ Go with your gut feeling!</p>
+      <p class="rules-title">📜 Games:</p>
+      <p class="rule-item">🎯 Game 1: Reaction Speed Test</p>
+      <p class="rule-item">🎴 Game 2: Memory Match</p>
+      <p class="rule-item">✓ Just have fun with it!</p>
+      <p class="rule-item">✓ I'll definitely tease you 😏</p>
     </div>
   </div>
   <button class="btn-primary" id="startGames">
@@ -236,48 +311,34 @@
   </button>
 </div>
 
-<!-- STEP 6: Would You Rather Game -->
-<div class="step" id="step-6">
-  <div class="game-badge">Game 1 🎮</div>
-  <div class="emoji-float">🌅</div>
-  <h2 class="glow-text">Would you rather?</h2>
-  <div class="options">
-    <button class="option-btn game-option">
-      <span class="emoji">🌅</span>
-      <span class="text">Beach sunset date</span>
-    </button>
-    <button class="option-btn game-option">
-      <span class="emoji">🌧️</span>
-      <span class="text">Rain + chai + music</span>
-    </button>
+<!-- GAME 1: Reaction Speed Test -->
+<div class="step" id="game-1">
+  <div class="game-badge">Game 1 🎯</div>
+  <div class="emoji-float">⚡</div>
+  <h2 class="glow-text">Reaction Speed!</h2>
+  <p class="game-question">Click the button as FAST as you can when it turns green! ⚡</p>
+  
+  <div class="reaction-game">
+    <div class="reaction-box" id="reactionBox">
+      <p class="reaction-text" id="reactionText">Click START to begin</p>
+    </div>
+    <button class="reaction-btn" id="reactionBtn">START</button>
+    <div class="reaction-result" id="reactionResult" style="display: none;">
+      <p class="reaction-time">Your time: <span id="reactionTime">0</span>ms</p>
+      <p class="reaction-message" id="reactionMessage"></p>
+    </div>
   </div>
+  
+  <button class="continue-btn" id="continueAfterReaction" style="display: none;">
+    Continue ✨
+  </button>
 </div>
 
-<!-- STEP 7: Teasing Game -->
-<div class="step" id="step-7">
-  <div class="game-badge">Game 2 ⚡</div>
-  <div class="emoji-float">😏</div>
-  <h2 class="glow-text">Quick Game</h2>
-  <p class="game-question">If I tease you too much... what happens?</p>
-  <div class="options">
-    <button class="option-btn game-option">
-      <span class="emoji">😑</span>
-      <span class="text">You ignore me</span>
-    </button>
-    <button class="option-btn game-option">
-      <span class="emoji">😏</span>
-      <span class="text">You tease back</span>
-    </button>
-    <button class="option-btn game-option">
-      <span class="emoji">😂</span>
-      <span class="text">"Saaf kar dungi"</span>
-    </button>
-  </div>
-</div>
+<!-- GAME 2: Memory Match Game -->
 
-<!-- STEP 8: Memory Match Game -->
-<div class="step" id="step-8">
-  <div class="game-badge">Game 3 🎴</div>
+<!-- GAME 2: Memory Match Game -->
+<div class="step" id="game-2">
+  <div class="game-badge">Game 2 🎴</div>
   <div class="emoji-float">💝</div>
   <h2 class="glow-text">Memory Match!</h2>
   <p class="game-question">Find the matching pairs 💕</p>
@@ -324,6 +385,8 @@
     <button class="continue-btn" id="continueAfterGame" style="display: none;">
       Continue ✨
     </button>
+  </div>
+</div>
   </div>
 </div>
 

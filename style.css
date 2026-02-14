@@ -1033,3 +1033,144 @@ input:focus + .input-glow {
   display: inline-block;
   animation: wiggle 0.5s ease infinite;
 }
+
+/* Hint section */
+.hint-section {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px dashed rgba(255, 107, 157, 0.2);
+}
+
+.hint-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: var(--text-dark);
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hint-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+.hint-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hint-text {
+  margin-top: 15px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 160, 122, 0.15));
+  border-left: 4px solid #ffd700;
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-style: italic;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-question-timer {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--secondary);
+  animation: timerPulse 1s ease infinite;
+}
+
+@keyframes timerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Reaction Game */
+.reaction-game {
+  margin: 30px 0;
+}
+
+.reaction-box {
+  width: 100%;
+  height: 200px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f44336, #e57373);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.reaction-box.waiting {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+}
+
+.reaction-box.ready {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+.reaction-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.reaction-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.reaction-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow);
+}
+
+.reaction-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reaction-result {
+  margin-top: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 160, 122, 0.15));
+  border-radius: 20px;
+  text-align: center;
+}
+
+.reaction-time {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.reaction-message {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: var(--text-dark);
+  line-height: 1.5;
+  font-weight: 600;
+}

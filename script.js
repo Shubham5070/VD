@@ -18,258 +18,311 @@ document.addEventListener("DOMContentLoaded", function () {
   let quizScore = 0;
   let quizTimer = null;
   let quizSeconds = 0;
+  let hintsRemaining = 3;
+  let questionTimer = null;
+  let questionSeconds = 0;
   
-  // 50 funny confusing quiz questions
+  // 50 funny confusing quiz questions (without answers in options)
   const questionPool = [
     {
       q: "If you could only eat one color of food for the rest of your life, which color would keep you alive the longest?",
-      options: ["Green (vegetables)", "Red (meat & tomatoes)", "Yellow (bananas & cheese)", "Brown (chocolate, obviously)"],
-      correct: 0
+      options: ["Green", "Red", "Yellow", "Brown"],
+      correct: 0,
+      hint: "Think vegetables... or just pick your favorite color 😏"
     },
     {
-      q: "A bat and a ball cost ₹110. The bat costs ₹100 more than the ball. How much does the ball cost?",
+      q: "A bat and a ball cost ₹110 in total. The bat costs ₹100 more than the ball. How much does the ball cost?",
       options: ["₹10", "₹5", "₹20", "₹15"],
-      correct: 1
+      correct: 1,
+      hint: "Math isn't your strong point, is it? 😂 Try again!"
     },
     {
-      q: "If you're running a race and you pass the person in 2nd place, what place are you in?",
-      options: ["1st place", "2nd place", "3rd place", "Still last 😂"],
-      correct: 1
+      q: "If you're running a race and you pass the person in 2nd place, what place are you in now?",
+      options: ["1st place", "2nd place", "3rd place", "Still running"],
+      correct: 1,
+      hint: "Think carefully... you PASSED the 2nd place person 🤔"
     },
     {
       q: "How many months have 28 days?",
-      options: ["1 month", "2 months", "All 12 months", "Only February"],
-      correct: 2
+      options: ["1", "2", "12", "Only February"],
+      correct: 2,
+      hint: "Every month has AT LEAST 28 days... get it? 😌"
     },
     {
       q: "Which is heavier: 1 kg of feathers or 1 kg of iron?",
-      options: ["Feathers", "Iron", "Both same", "Depends on mood"],
-      correct: 2
+      options: ["Feathers", "Iron", "Both same", "Depends"],
+      correct: 2,
+      hint: "1 kg = 1 kg... seriously? 🙄"
     },
     {
-      q: "If a plane crashes on the border of India and Pakistan, where do they bury the survivors?",
-      options: ["India", "Pakistan", "Nepal", "You don't bury survivors! 🤦"],
-      correct: 3
+      q: "If a plane crashes exactly on the border of India and Pakistan, where do they bury the survivors?",
+      options: ["India", "Pakistan", "Nepal", "Nowhere"],
+      correct: 3,
+      hint: "Read the question again... SURVIVORS 🤦"
     },
     {
       q: "What comes once in a minute, twice in a moment, but never in a thousand years?",
-      options: ["Time", "The letter M", "Luck", "Happiness"],
-      correct: 1
+      options: ["Time", "Letter M", "Luck", "Happiness"],
+      correct: 1,
+      hint: "Count the letters in each word... M-I-N-U-T-E 😏"
     },
     {
       q: "If there are 3 apples and you take away 2, how many do YOU have?",
-      options: ["1 apple", "2 apples", "3 apples", "0 apples"],
-      correct: 1
+      options: ["1", "2", "3", "0"],
+      correct: 1,
+      hint: "YOU took 2 apples... so YOU have? 🍎"
     },
     {
       q: "A farmer has 17 sheep. All but 9 die. How many are left?",
-      options: ["8 sheep", "9 sheep", "0 sheep", "17 sheep"],
-      correct: 1
+      options: ["8", "9", "0", "17"],
+      correct: 1,
+      hint: "'All BUT 9' means 9 survived! 🐑"
     },
     {
       q: "What goes up but never comes down?",
-      options: ["Balloon", "Your age", "Airplane", "Temperature"],
-      correct: 1
+      options: ["Balloon", "Age", "Airplane", "Temperature"],
+      correct: 1,
+      hint: "Think about birthdays... can you get younger? 🎂"
     },
     {
-      q: "If you have a bowl with 6 apples and you take away 4, how many do you have?",
-      options: ["2", "4", "6", "A weird obsession with apples"],
-      correct: 1
+      q: "What can you hold without ever touching it?",
+      options: ["Air", "Breath", "Conversation", "Grudge"],
+      correct: 2,
+      hint: "You can HOLD a conversation without touching it 💬"
     },
     {
-      q: "What can you hold without touching it?",
-      options: ["Air", "Your breath", "A conversation", "Your temper 😤"],
-      correct: 2
-    },
-    {
-      q: "If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?",
-      options: ["100 minutes", "20 minutes", "5 minutes", "500 minutes"],
-      correct: 2
+      q: "If it takes 5 machines 5 minutes to make 5 widgets, how long for 100 machines to make 100 widgets?",
+      options: ["100 min", "20 min", "5 min", "500 min"],
+      correct: 2,
+      hint: "Each machine makes 1 widget in 5 minutes... still confused? 😂"
     },
     {
       q: "What word becomes shorter when you add two letters to it?",
       options: ["Long", "Short", "Brief", "Tiny"],
-      correct: 1
+      correct: 1,
+      hint: "Add 'er' to SHORT = SHORTER 🤭"
     },
     {
       q: "If you overtake the last person in a race, what position are you in?",
-      options: ["2nd last", "Last", "Impossible! Can't overtake last", "1st place"],
-      correct: 2
+      options: ["2nd last", "Last", "Can't do it", "1st"],
+      correct: 2,
+      hint: "How can you overtake the LAST person? Think! 🏃"
     },
     {
       q: "How many times can you subtract 10 from 100?",
-      options: ["10 times", "Once (then it's 90)", "Infinite", "9 times"],
-      correct: 1
+      options: ["10 times", "Once", "Infinite", "9 times"],
+      correct: 1,
+      hint: "After first time, it's 90, not 100 anymore! 😏"
     },
     {
       q: "A rooster laid an egg on top of a roof. Which way did it roll?",
-      options: ["Left", "Right", "Down the middle", "Roosters don't lay eggs! 🐓"],
-      correct: 3
+      options: ["Left", "Right", "Middle", "Didn't roll"],
+      correct: 3,
+      hint: "Roosters don't lay eggs, genius! 🐓"
     },
     {
       q: "What gets wetter the more it dries?",
-      options: ["Sponge", "Towel", "Mop", "Your phone in rain"],
-      correct: 1
+      options: ["Sponge", "Towel", "Mop", "Hair"],
+      correct: 1,
+      hint: "What do you use after shower? 🛁"
     },
     {
-      q: "If you're in a dark room with a candle, oil lamp, and fireplace but only one match, what do you light first?",
-      options: ["Candle", "Oil lamp", "Fireplace", "The match, duh! 🔥"],
-      correct: 3
+      q: "In a dark room with candle, oil lamp, and fireplace but only one match, what lights first?",
+      options: ["Candle", "Oil lamp", "Fireplace", "The match"],
+      correct: 3,
+      hint: "You need to light the match FIRST, duh! 🔥"
     },
     {
       q: "What has hands but can't clap?",
-      options: ["Statue", "Clock", "Mannequin", "My friend after workout"],
-      correct: 1
+      options: ["Statue", "Clock", "Mannequin", "Robot"],
+      correct: 1,
+      hint: "Check the time... what has hands? ⏰"
     },
     {
       q: "If two's company and three's a crowd, what are four and five?",
-      options: ["A party", "Too many", "Nine", "Chaos"],
-      correct: 2
+      options: ["Party", "Too many", "Nine", "Chaos"],
+      correct: 2,
+      hint: "4 + 5 = ? Basic math! 😂"
     },
     {
       q: "What belongs to you but others use it more than you?",
-      options: ["Your WiFi password", "Your name", "Your Netflix account", "Your advice"],
-      correct: 1
+      options: ["WiFi", "Name", "Netflix", "Advice"],
+      correct: 1,
+      hint: "People call you by your... 🤔"
     },
     {
       q: "Before Mt. Everest was discovered, what was the tallest mountain?",
-      options: ["K2", "Mt. Kilimanjaro", "Mt. Everest (still tallest)", "Your ego? 😏"],
-      correct: 2
+      options: ["K2", "Kilimanjaro", "Still Everest", "None"],
+      correct: 2,
+      hint: "It was still the tallest, just not discovered! 🏔️"
     },
     {
       q: "What's full of holes but still holds water?",
-      options: ["Bucket", "Sponge", "Net", "My excuses"],
-      correct: 1
+      options: ["Bucket", "Sponge", "Net", "Straw"],
+      correct: 1,
+      hint: "Kitchen cleaning time... 🧽"
     },
     {
       q: "A girl fell off a 50-foot ladder but didn't get hurt. How?",
-      options: ["She had a parachute", "Landed on cushions", "She fell off the bottom step", "She's superhuman"],
-      correct: 2
+      options: ["Parachute", "Cushions", "Bottom step", "Superman"],
+      correct: 2,
+      hint: "She was on the first step! Not that high 😌"
     },
     {
       q: "What starts with 'e', ends with 'e', but only has one letter in it?",
       options: ["Eye", "Ear", "Envelope", "Eagle"],
-      correct: 2
+      correct: 2,
+      hint: "You put letters inside it... ✉️"
     },
     {
       q: "I have cities but no houses, forests but no trees, water but no fish. What am I?",
-      options: ["A painting", "A map", "A video game", "Dubai 😂"],
-      correct: 1
+      options: ["Painting", "Map", "Video game", "Model"],
+      correct: 1,
+      hint: "Geography class... what shows cities? 🗺️"
     },
     {
       q: "What can travel around the world while staying in the corner?",
-      options: ["A stamp", "A spider", "Your thoughts", "Internet cables"],
-      correct: 0
+      options: ["Stamp", "Spider", "Email", "Wind"],
+      correct: 0,
+      hint: "Check the corner of an envelope... 📮"
     },
     {
-      q: "If a red house is made of red bricks, and a blue house is made of blue bricks, what is a greenhouse made of?",
+      q: "If red house is red bricks, blue house is blue bricks, what is greenhouse made of?",
       options: ["Green bricks", "Glass", "Wood", "Plants"],
-      correct: 1
+      correct: 1,
+      hint: "Where do plants grow? Need sunlight! 🌱"
     },
     {
       q: "What has a neck but no head?",
-      options: ["Giraffe without head (scary)", "Bottle", "T-shirt", "Ostrich hiding"],
-      correct: 1
+      options: ["Giraffe", "Bottle", "T-shirt", "Vase"],
+      correct: 1,
+      hint: "Drink from it... 🍾"
     },
     {
       q: "How can you drop a raw egg on concrete without cracking it?",
-      options: ["Wrap in bubble wrap", "Drop from 1mm height", "Concrete doesn't crack easily 😏", "Boil it first"],
-      correct: 2
+      options: ["Bubble wrap", "1mm height", "Concrete won't crack", "Boil it"],
+      correct: 2,
+      hint: "Concrete is pretty hard to crack... 😏"
     },
     {
       q: "What goes through towns and hills but never moves?",
-      options: ["River", "Road", "Train tracks", "Google Street View car"],
-      correct: 1
+      options: ["River", "Road", "Train track", "Wind"],
+      correct: 1,
+      hint: "You drive on it... 🛣️"
     },
     {
-      q: "What has 4 legs in the morning, 2 at noon, and 3 in the evening?",
-      options: ["A chair", "Human (baby→adult→old with cane)", "A dog learning tricks", "Furniture sale"],
-      correct: 1
+      q: "What has 4 legs morning, 2 at noon, 3 evening?",
+      options: ["Chair", "Human", "Dog", "Monster"],
+      correct: 1,
+      hint: "Baby crawls, adult walks, old person with cane 👴"
     },
     {
-      q: "If you multiply all numbers on a phone keypad, what do you get?",
-      options: ["720", "0 (because of zero)", "5040", "Error 404"],
-      correct: 1
+      q: "If you multiply all numbers on phone keypad, what do you get?",
+      options: ["720", "0", "5040", "Error"],
+      correct: 1,
+      hint: "There's a zero on the keypad... 0 × anything = ? 📱"
     },
     {
       q: "What's orange and sounds like a parrot?",
-      options: ["Orange", "A carrot", "Orange parrot", "Mango (close enough)"],
-      correct: 1
+      options: ["Orange", "Carrot", "Orange parrot", "Mango"],
+      correct: 1,
+      hint: "Carrot sounds like parrot... get it? 🥕"
     },
     {
-      q: "A man pushes his car to a hotel and loses his fortune. What happened?",
-      options: ["Car broke down", "Playing Monopoly 🎲", "Gambling addiction", "Hotel was expensive"],
-      correct: 1
+      q: "A man pushes car to hotel and loses his fortune. What happened?",
+      options: ["Broke down", "Playing Monopoly", "Gambling", "Expensive"],
+      correct: 1,
+      hint: "Board game with hotels... 🎲"
     },
     {
-      q: "What 5-letter word becomes shorter when you add 2 letters to it?",
+      q: "What 5-letter word becomes shorter when you add 2 letters?",
       options: ["Short", "Brief", "Small", "Quick"],
-      correct: 0
+      correct: 0,
+      hint: "SHORT + ER = SHORTER 😂"
     },
     {
-      q: "If you have it, you want to share it. If you share it, you don't have it. What is it?",
-      options: ["Money", "A secret", "Food", "WiFi password"],
-      correct: 1
+      q: "If you have it, you want to share it. If you share it, you don't have it anymore.",
+      options: ["Money", "Secret", "Food", "Password"],
+      correct: 1,
+      hint: "Once you tell everyone... 🤫"
     },
     {
-      q: "What's black when you buy it, red when you use it, and white when you throw it away?",
-      options: ["Charcoal", "Pen", "Phone", "Relationship status 😂"],
-      correct: 0
+      q: "What's black when buy, red when use, white when throw away?",
+      options: ["Charcoal", "Pen", "Phone", "Tire"],
+      correct: 0,
+      hint: "Used for BBQ... 🔥"
     },
     {
-      q: "Wednesday, Tom and Joe went to a restaurant. They ate lunch. Who paid?",
-      options: ["Tom", "Joe", "Wednesday (that's the name!)", "Split the bill"],
-      correct: 2
+      q: "Wednesday, Tom and Joe went to restaurant. Who paid?",
+      options: ["Tom", "Joe", "Wednesday", "Split bill"],
+      correct: 2,
+      hint: "Wednesday is a person's name! 😂"
     },
     {
-      q: "What can run but never walks, has a mouth but never talks?",
-      options: ["River", "Robot", "News anchor (maybe)", "My friend when late"],
-      correct: 0
+      q: "What can run but never walks, has mouth but never talks?",
+      options: ["River", "Robot", "Clock", "Car"],
+      correct: 0,
+      hint: "Water flows... 💧"
     },
     {
       q: "What question can you never answer 'yes' to truthfully?",
-      options: ["Are you dead?", "Are you asleep?", "Are you lying?", "Do you like pineapple on pizza?"],
-      correct: 1
+      options: ["Are you dead?", "Are you asleep?", "Are you lying?", "Are you hungry?"],
+      correct: 1,
+      hint: "If you're answering, you're not... 😴"
     },
     {
-      q: "If you're American in the living room, what are you in the bathroom?",
-      options: ["European (you're-a-peein')", "Still American", "Confused", "On the phone"],
-      correct: 0
+      q: "If American in living room, what are you in bathroom?",
+      options: ["European", "American", "Confused", "Private"],
+      correct: 0,
+      hint: "European = You're-a-peein' 😂"
     },
     {
-      q: "What has keys but no locks, space but no room, you can enter but can't go inside?",
-      options: ["Prison", "Keyboard ⌨️", "Parking lot", "Relationship (complicated)"],
-      correct: 1
+      q: "What has keys but no locks, space but no room, enter but can't go inside?",
+      options: ["Prison", "Keyboard", "Parking", "Door"],
+      correct: 1,
+      hint: "You're typing on one right now... ⌨️"
     },
     {
       q: "Why can't you give Elsa a balloon?",
-      options: ["She's fictional", "She'll let it go 🎵", "Too cold", "No hands"],
-      correct: 1
-    },
-    {
-      q: "What's the laziest mountain in the world?",
-      options: ["Mt. Everest (just sits there)", "Mt. Rushmore", "Everest (never moved)", "Mount Neverest 😴"],
-      correct: 3
+      options: ["Fictional", "Let it go", "Too cold", "No hands"],
+      correct: 1,
+      hint: "Famous Frozen song... 🎵"
     },
     {
       q: "What do you call a bear with no teeth?",
-      options: ["Toothless bear", "A gummy bear 🐻", "Dangerous anyway", "Vegetarian bear"],
-      correct: 1
+      options: ["Toothless", "Gummy bear", "Dangerous", "Vegetarian"],
+      correct: 1,
+      hint: "It's also a candy... 🐻"
     },
     {
       q: "Why don't scientists trust atoms?",
-      options: ["Too small", "They make up everything 😏", "Unstable", "They're negative"],
-      correct: 1
+      options: ["Too small", "Make up everything", "Unstable", "Negative"],
+      correct: 1,
+      hint: "They literally make up everything! 😏"
     },
     {
       q: "What's worse than finding a worm in your apple?",
-      options: ["Two worms", "Finding half a worm 🐛", "No apple", "Finding your ex"],
-      correct: 1
+      options: ["Two worms", "Half a worm", "No apple", "Spider"],
+      correct: 1,
+      hint: "Half means you already ate the other half... 🐛"
     },
     {
       q: "How do you organize a space party?",
-      options: ["Call NASA", "You planet 🪐", "Rent a venue", "Invite aliens"],
-      correct: 1
+      options: ["Call NASA", "You planet", "Rent venue", "Invite aliens"],
+      correct: 1,
+      hint: "You PLANET... get it? 🪐"
+    },
+    {
+      q: "What's the best thing about Switzerland?",
+      options: ["Chocolate", "Flag is a big plus", "Mountains", "Watches"],
+      correct: 1,
+      hint: "The flag is literally a big plus sign! ➕"
+    },
+    {
+      q: "Why did the bicycle fall over?",
+      options: ["Broken", "Too tired", "Wind", "Drunk rider"],
+      correct: 1,
+      hint: "It was two-tired... 🚲"
     }
   ];
   
@@ -318,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateProgress();
         
         // Initialize memory game if on that step
-        if (stepId === 8 || stepId === 'step-8') {
+        if (stepId === 'game-2') {
           initMemoryGame();
         }
         
@@ -343,14 +396,16 @@ document.addEventListener("DOMContentLoaded", function () {
       'step-2',           // Calm place
       'step-3',           // Coffee rule
       'step-4',           // Vibe
+      'step-4-5',         // Bike question
+      'step-4-6',         // Food preference
+      'step-4-7',         // Late night
       'step-5',           // What matters
       'section-2-intro',  // Quiz intro
       'quiz-step',        // Quiz questions
-      'quiz-result',      // Quiz result (handled by quiz logic)
+      'quiz-result',      // Quiz result
       'section-3-intro',  // Games intro
-      'step-6',           // Would you rather
-      'step-7',           // Teasing game
-      'step-8',           // Memory game
+      'game-1',           // Reaction game
+      'game-2',           // Memory match
       'step-9',           // Serious question
       'step-10',          // Communication
       'step-11',          // Vibe check final
@@ -414,21 +469,12 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // Quiz functions
   function initQuiz() {
-    // Pick 20 random questions from the pool
-    quizQuestions = shuffleArray(questionPool).slice(0, 20);
+    // Pick 10 random questions from the pool
+    quizQuestions = shuffleArray(questionPool).slice(0, 10);
     currentQuizIndex = 0;
     quizScore = 0;
     quizSeconds = 0;
-    
-    // Start timer
-    if (quizTimer) clearInterval(quizTimer);
-    quizTimer = setInterval(() => {
-      quizSeconds++;
-      const minutes = Math.floor(quizSeconds / 60);
-      const seconds = quizSeconds % 60;
-      document.getElementById('quizTimer').textContent = 
-        `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    }, 1000);
+    hintsRemaining = 3;
   }
   
   function displayQuizQuestion() {
@@ -440,6 +486,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const q = quizQuestions[currentQuizIndex];
     document.getElementById('currentQ').textContent = currentQuizIndex + 1;
     document.getElementById('quizQuestion').textContent = q.q;
+    
+    // Reset and start question timer (21 seconds)
+    questionSeconds = 21;
+    document.getElementById('questionTimer').textContent = questionSeconds;
+    document.getElementById('questionTimer').style.color = 'var(--secondary)';
+    
+    if (questionTimer) clearInterval(questionTimer);
+    questionTimer = setInterval(() => {
+      questionSeconds--;
+      document.getElementById('questionTimer').textContent = questionSeconds;
+      
+      // Change color when time running out
+      if (questionSeconds <= 5) {
+        document.getElementById('questionTimer').style.color = '#ff4444';
+      }
+      
+      // Auto-move to next question when time runs out
+      if (questionSeconds <= 0) {
+        clearInterval(questionTimer);
+        setTimeout(() => {
+          currentQuizIndex++;
+          displayQuizQuestion();
+        }, 1000);
+      }
+    }, 1000);
+    
+    // Update hints display
+    document.getElementById('hintsLeft').textContent = hintsRemaining;
+    document.getElementById('hintBtn').disabled = hintsRemaining <= 0;
+    document.getElementById('hintText').style.display = 'none';
+    document.getElementById('hintText').textContent = '';
     
     const optionsContainer = document.getElementById('quizOptions');
     optionsContainer.innerHTML = '';
@@ -453,17 +530,51 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   
-  function selectQuizAnswer(selectedIndex) {
+  function useHint() {
+    if (hintsRemaining <= 0) return;
+    
+    hintsRemaining--;
     const q = quizQuestions[currentQuizIndex];
     
-    // Mark as selected
+    document.getElementById('hintsLeft').textContent = hintsRemaining;
+    document.getElementById('hintBtn').disabled = hintsRemaining <= 0;
+    
+    const hintText = document.getElementById('hintText');
+    hintText.textContent = q.hint;
+    hintText.style.display = 'block';
+  }
+  
+  function selectQuizAnswer(selectedIndex) {
+    // Stop timer
+    if (questionTimer) clearInterval(questionTimer);
+    
+    const q = quizQuestions[currentQuizIndex];
+    
+    // Disable all options
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+      btn.disabled = true;
+    });
+    
+    // Mark as selected and show if correct
     document.querySelectorAll('.quiz-option').forEach((btn, idx) => {
       if (idx === selectedIndex) {
         btn.classList.add('selected');
+        if (idx === q.correct) {
+          btn.style.background = 'linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(102, 187, 106, 0.3))';
+          btn.style.borderColor = '#4caf50';
+        } else {
+          btn.style.background = 'linear-gradient(135deg, rgba(244, 67, 54, 0.3), rgba(229, 115, 115, 0.3))';
+          btn.style.borderColor = '#f44336';
+        }
+      }
+      // Always show correct answer
+      if (idx === q.correct) {
+        btn.style.borderColor = '#4caf50';
+        btn.style.fontWeight = '700';
       }
     });
     
-    // Check if correct (but we'll manipulate score later)
+    // Check if correct
     if (selectedIndex === q.correct) {
       quizScore++;
     }
@@ -472,29 +583,31 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
       currentQuizIndex++;
       displayQuizQuestion();
-    }, 600);
+    }, 1500);
   }
   
   function showQuizResult() {
-    // Stop timer
+    // Stop timers
     if (quizTimer) clearInterval(quizTimer);
+    if (questionTimer) clearInterval(questionTimer);
     
-    // Always show score between 5-10 (to tease her 😏)
-    const displayScore = Math.floor(Math.random() * 6) + 5; // Random between 5-10
-    
-    document.getElementById('finalScore').textContent = displayScore;
+    // Show ACTUAL score (no manipulation!)
+    document.getElementById('finalScore').textContent = quizScore;
     
     let message = '';
     let emoji = '';
     
-    if (displayScore <= 6) {
-      message = `${displayScore}/20? 😂<br>Koi nahi, dil toh jeet liya tune!<br>Quiz mein thoda weak ho, but personality strong hai! 💕`;
+    if (quizScore <= 3) {
+      message = `${quizScore}/10? Seriously? 😂<br>Koi nahi, looks se compensate kar lena!<br>Quiz mein weak ho but personality strong hai! 💕`;
       emoji = '🙈';
-    } else if (displayScore <= 8) {
-      message = `${displayScore}/20... Not bad! 😌<br>Expected थोड़ा better, but chalta hai!<br>Looks se compensate kar lena 😏`;
+    } else if (quizScore <= 5) {
+      message = `${quizScore}/10... Average! 😌<br>Expected थोड़ा better from that brain!<br>Par chalta hai, aur bhi qualities hain 😏`;
       emoji = '🤷‍♀️';
+    } else if (quizScore <= 7) {
+      message = `${quizScore}/10! Not bad at all! 😊<br>Decent score hai, respect! 👏<br>Dimaag bhi hai, dil bhi! 💕`;
+      emoji = '🎉';
     } else {
-      message = `Whoa! ${displayScore}/20! 🎉<br>Dimaag bhi hai aur dil bhi!<br>Perfect combination 💕<br>(Still gonna tease you though 😂)`;
+      message = `Whoa! ${quizScore}/10! Amazing! 🔥<br>Dimaag toh ekdum sharp hai!<br>Impressed हूँ seriously! 💕<br>(Ab humble bhi raho thoda 😂)`;
       emoji = '🎊';
     }
     
@@ -503,6 +616,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
     showStep('quiz-result');
   }
+  
+  document.getElementById('hintBtn').addEventListener('click', useHint);
   
   // Handle all option clicks (except memory game step)
   document.querySelectorAll(".options button").forEach(btn => {
@@ -817,3 +932,72 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   
 });
+
+  // Reaction game
+  let reactionStartTime = 0;
+  let reactionTimeout = null;
+  let reactionAttempts = 0;
+  
+  document.getElementById('reactionBtn').addEventListener('click', startReactionGame);
+  document.getElementById('continueAfterReaction').addEventListener('click', () => nextStep());
+  
+  function startReactionGame() {
+    const box = document.getElementById('reactionBox');
+    const text = document.getElementById('reactionText');
+    const btn = document.getElementById('reactionBtn');
+    const result = document.getElementById('reactionResult');
+    
+    btn.disabled = true;
+    result.style.display = 'none';
+    
+    // Red phase - wait
+    box.className = 'reaction-box';
+    box.style.background = 'linear-gradient(135deg, #f44336, #e57373)';
+    text.textContent = 'Wait for it...';
+    box.onclick = () => {
+      // Clicked too early
+      text.textContent = 'Too early! 😂 Try again!';
+      btn.disabled = false;
+      reactionTimeout && clearTimeout(reactionTimeout);
+    };
+    
+    // Wait random time (2-5 seconds)
+    const waitTime = Math.random() * 3000 + 2000;
+    
+    reactionTimeout = setTimeout(() => {
+      // Green phase - GO!
+      box.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
+      text.textContent = 'CLICK NOW! ⚡';
+      reactionStartTime = Date.now();
+      
+      box.onclick = () => {
+        const reactionTime = Date.now() - reactionStartTime;
+        document.getElementById('reactionTime').textContent = reactionTime;
+        
+        let message = '';
+        if (reactionTime < 200) {
+          message = `${reactionTime}ms?! 🔥 Lightning fast!<br>Reflexes ekdum sharp hain! Impressive! 💪`;
+        } else if (reactionTime < 300) {
+          message = `${reactionTime}ms! Pretty good! 😊<br>Quick reflexes, nice! 👏`;
+        } else if (reactionTime < 400) {
+          message = `${reactionTime}ms... Not bad! 😌<br>Average speed, but you tried! 💕`;
+        } else {
+          message = `${reactionTime}ms?! 😂 Thoda slow ho!<br>Were you sleeping? 😴<br>Practice karo! 🎮`;
+        }
+        
+        document.getElementById('reactionMessage').innerHTML = message;
+        result.style.display = 'block';
+        
+        box.onclick = null;
+        box.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+        text.textContent = 'Done! ✨';
+        btn.textContent = 'Try Again?';
+        btn.disabled = false;
+        
+        // Show continue button
+        setTimeout(() => {
+          document.getElementById('continueAfterReaction').style.display = 'block';
+        }, 2000);
+      };
+    }, waitTime);
+  }
