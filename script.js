@@ -1,3 +1,55 @@
+// ============================================
+// GOOGLE SHEETS DATABASE CONFIGURATION
+// ============================================
+// Follow setup instructions in SETUP.md file
+// Replace this URL with your own Google Apps Script Web App URL
+// ============================================
+// DATABASE CONFIGURATION - SUPABASE (FREE & EASY!)
+// ============================================
+// Follow these steps to set up:
+// 1. Go to https://supabase.com and create a free account
+// 2. Create a new project
+// 3. Go to Settings > API and copy your URL and anon key
+// 4. Replace the values below
+// 5. Set ENABLE_DATABASE to true
+// 6. Create table using SQL in next comment block
+// ============================================
+
+const SUPABASE_URL = 'https://ghutjqujbsdlufthejpc.supabase.com'; // e.g., 'https://xxxxx.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdodXRqcXVqYnNkbHVmdGhlanBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzgyMTUsImV4cCI6MjA4NjY1NDIxNX0.OU7oxnrnnCjHeJ1k-m3hjkjvFZl0177EMvs0ehaPbi0';
+const ENABLE_DATABASE = true; // Set to true after setup
+
+/* 
+STEP 7: Run this SQL in Supabase SQL Editor to create the table:
+
+CREATE TABLE responses (
+  id BIGSERIAL PRIMARY KEY,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  name TEXT,
+  quiz_score INTEGER,
+  calm_place TEXT,
+  coffee_rule TEXT,
+  vibe TEXT,
+  bike_preference TEXT,
+  food_mood TEXT,
+  late_night TEXT,
+  what_matters TEXT,
+  serious_question TEXT,
+  communication TEXT,
+  vibe_check TEXT,
+  final_answer TEXT,
+  all_responses JSONB
+);
+
+-- Make table publicly insertable (read-only for you in dashboard)
+ALTER TABLE responses ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public insert" ON responses
+  FOR INSERT TO anon
+  WITH CHECK (true);
+*/
+// ============================================
+
 document.addEventListener("DOMContentLoaded", function () {
   
   let currentStep = 1;
@@ -905,6 +957,64 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('displayName').textContent = name;
   }
   
+  // Send all responses to Google Sheets
+  function saveResponsesToDatabase() {
+    if (!ENABLE_DATABASE) {
+      console.log('📊 Database disabled. Responses:', answers);
+      console.log('Quiz Score:', quizScore);
+      return;
+    }
+    
+    // Check if Supabase is configured
+    if (SUPABASE_URL === 'YOUR_SUPABASE_URL_HERE' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+      console.warn('⚠️ Supabase credentials not configured!');
+      console.log('Responses:', answers);
+      return;
+    }
+    
+    // Prepare data to send to Supabase
+    const data = {
+      name: answers.name || 'Not provided',
+      quiz_score: quizScore || 0,
+      calm_place: answers.q2 || null,
+      coffee_rule: answers.q3 || null,
+      vibe: answers.q4 || null,
+      bike_preference: answers['q4-5'] || null,
+      food_mood: answers['q4-6'] || null,
+      late_night: answers['q4-7'] || null,
+      what_matters: answers.q5 || null,
+      serious_question: answers.q9 || null,
+      communication: answers.q10 || null,
+      vibe_check: answers.q11 || null,
+      final_answer: 'Yes',
+      all_responses: answers
+    };
+    
+    console.log('💾 Sending data to Supabase:', data);
+    
+    // Send to Supabase
+    fetch(`${SUPABASE_URL}/rest/v1/responses`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('✅ Responses saved to Supabase!');
+      } else {
+        console.error('❌ Failed to save:', response.status);
+      }
+    })
+    .catch(error => {
+      console.error('❌ Error saving to database:', error);
+    });
+  }
+  
   // YES button with confetti
   document.getElementById("yesBtn").addEventListener("click", function () {
     this.innerHTML = '<span>Yeahhh! Let\'s do this 🎉✨</span>';
@@ -913,6 +1023,9 @@ document.addEventListener("DOMContentLoaded", function () {
     this.style.transform = 'scale(1.05)';
     
     document.getElementById("noBtn").style.display = 'none';
+    
+    // Save responses to database
+    saveResponsesToDatabase();
     
     // Trigger confetti
     launchConfetti();
