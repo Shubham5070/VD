@@ -15,7 +15,7 @@
 // 6. Create table using SQL in next comment block
 // ============================================
 
-const SUPABASE_URL = 'https://ghutjqujbsdlufthejpc.supabase.com'; // e.g., 'https://xxxxx.supabase.co'
+const SUPABASE_URL = 'https://ghutjqujbsdlufthejpc.supabase.co'; // e.g., 'https://xxxxx.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdodXRqcXVqYnNkbHVmdGhlanBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzgyMTUsImV4cCI6MjA4NjY1NDIxNX0.OU7oxnrnnCjHeJ1k-m3hjkjvFZl0177EMvs0ehaPbi0';
 const ENABLE_DATABASE = true; // Set to true after setup
 
