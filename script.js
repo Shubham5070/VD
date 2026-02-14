@@ -349,11 +349,54 @@ document.addEventListener("DOMContentLoaded", function () {
     text.textContent = nextSectionText;
     chopper.classList.add('active');
     
+    // Play chopper sound
+    playChopperSound();
+    
     // Remove after animation completes
     setTimeout(() => {
       chopper.classList.remove('active');
       if (callback) callback();
     }, 2200);
+  }
+  
+  // Play chopper helicopter sound
+  function playChopperSound() {
+    // Create audio context for helicopter sound
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Create oscillators for helicopter rotor sound
+    const oscillator1 = audioContext.createOscillator();
+    const oscillator2 = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    // Configure helicopter rotor sound
+    oscillator1.type = 'sawtooth';
+    oscillator1.frequency.setValueAtTime(80, audioContext.currentTime);
+    oscillator1.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.5);
+    
+    oscillator2.type = 'square';
+    oscillator2.frequency.setValueAtTime(40, audioContext.currentTime);
+    oscillator2.frequency.exponentialRampToValueAtTime(60, audioContext.currentTime + 0.5);
+    
+    // Create rhythmic pulsing for rotor blades
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    
+    for (let i = 0; i < 20; i++) {
+      const time = audioContext.currentTime + (i * 0.1);
+      gainNode.gain.setValueAtTime(0.15, time);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, time + 0.05);
+    }
+    
+    // Connect nodes
+    oscillator1.connect(gainNode);
+    oscillator2.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Start and stop
+    oscillator1.start(audioContext.currentTime);
+    oscillator2.start(audioContext.currentTime);
+    oscillator1.stop(audioContext.currentTime + 2);
+    oscillator2.stop(audioContext.currentTime + 2);
   }
   
   // Show step with animation
@@ -995,10 +1038,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let reactionStartTime = 0;
   let reactionTimeout = null;
   let reactionAttempts = 0;
+  let reactionCompleted = false;
   
   document.getElementById('reactionBtn').addEventListener('click', startReactionGame);
   document.getElementById('continueAfterReaction').addEventListener('click', () => {
-    nextStep();
+    if (reactionCompleted) {
+      nextStep();
+    }
   });
   
   function startReactionGame() {
@@ -1010,7 +1056,11 @@ document.addEventListener("DOMContentLoaded", function () {
     
     btn.disabled = true;
     result.style.display = 'none';
-    continueBtn.style.display = 'none';
+    
+    // Don't hide continue button if already completed once
+    if (!reactionCompleted) {
+      continueBtn.style.display = 'none';
+    }
     
     // Red phase - wait
     box.className = 'reaction-box';
@@ -1056,7 +1106,8 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.textContent = 'Try Again?';
         btn.disabled = false;
         
-        // Show continue button immediately
+        // Mark as completed and show continue button
+        reactionCompleted = true;
         continueBtn.style.display = 'block';
       };
     }, waitTime);

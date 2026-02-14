@@ -859,6 +859,110 @@ input:focus + .input-glow {
   }
 }
 
+/* Journey animation - girl in helicopter, boy in train */
+.journey-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.girl-helicopter {
+  position: absolute;
+  top: 15%;
+  left: -150px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: helicopterFly 8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.girl-helicopter .vehicle {
+  animation: helicopterRotor 0.3s linear infinite;
+}
+
+@keyframes helicopterFly {
+  0% {
+    transform: translateX(-150px) translateY(0px);
+    left: -150px;
+  }
+  25% {
+    transform: translateX(0) translateY(-20px);
+    left: 25%;
+  }
+  50% {
+    transform: translateX(0) translateY(0px);
+    left: 50%;
+  }
+  75% {
+    transform: translateX(0) translateY(-20px);
+    left: 75%;
+  }
+  100% {
+    transform: translateX(150px) translateY(0px);
+    left: 100%;
+  }
+}
+
+@keyframes helicopterRotor {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.boy-train {
+  position: absolute;
+  bottom: 20%;
+  left: -200px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: trainMove 10s linear infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes trainMove {
+  0% {
+    left: -200px;
+    transform: translateY(0);
+  }
+  48% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  52% {
+    transform: translateY(0);
+  }
+  100% {
+    left: 110%;
+    transform: translateY(0);
+  }
+}
+
+.journey-animation .character {
+  display: inline-block;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+}
+
 /* Final step */
 .hearts-animation {
   position: absolute;
