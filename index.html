@@ -1,132 +1,296 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Something Honest For You 🌷</title>
-
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=DM+Sans:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
 </head>
 
 <body>
+<!-- Floating particles background -->
+<div class="particles">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
 
 <div class="container">
 <div class="card">
 
-<!-- STEP 1 -->
+<!-- Progress indicator -->
+<div class="progress-bar">
+  <div class="progress-fill"></div>
+</div>
+
+<!-- STEP 1: Name Input -->
 <div class="step active" id="step-1">
-  <h2>Before we begin… 🌙</h2>
+  <div class="emoji-float">🌙</div>
+  <h2 class="glow-text">Before we begin...</h2>
   <p>What name should I use today?</p>
-  <input type="text" id="herName" placeholder="Type your name 🌸">
-  <button id="continueBtn">Continue</button>
+  <div class="input-wrapper">
+    <input type="text" id="herName" placeholder="Type your name 🌸">
+    <div class="input-glow"></div>
+  </div>
+  <button class="btn-primary" id="continueBtn">
+    <span>Continue</span>
+    <div class="btn-shine"></div>
+  </button>
 </div>
 
-<!-- STEP 2 -->
+<!-- STEP 2: Calm Place -->
 <div class="step" id="step-2">
-  <h2>Pick your calm place 🌊</h2>
+  <div class="emoji-float">🌊</div>
+  <h2 class="glow-text">Pick your calm place</h2>
   <div class="options">
-    <button>Late night walk 🌙</button>
-    <button>Sitting near water 🌊</button>
-    <button>Amusement park 🎢</button>
+    <button class="option-btn">
+      <span class="emoji">🌙</span>
+      <span class="text">Late night walk</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🌊</span>
+      <span class="text">Sitting near water</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🎢</span>
+      <span class="text">Amusement park</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 3 -->
+<!-- STEP 3: Coffee Rule -->
 <div class="step" id="step-3">
-  <h2>Coffee date rule ☕</h2>
+  <div class="emoji-float">☕</div>
+  <h2 class="glow-text">Coffee date rule</h2>
   <div class="options">
-    <button>You pay 😌</button>
-    <button>I pay 😎</button>
-    <button>We fight for the bill 😂</button>
+    <button class="option-btn">
+      <span class="emoji">😌</span>
+      <span class="text">You pay</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">😎</span>
+      <span class="text">I pay</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">😂</span>
+      <span class="text">We fight for the bill</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 4 -->
+<!-- STEP 4: Vibe Check -->
 <div class="step" id="step-4">
-  <h2>Choose our vibe 💫</h2>
+  <div class="emoji-float">💫</div>
+  <h2 class="glow-text">Choose our vibe</h2>
   <div class="options">
-    <button>Soft & peaceful 🌷</button>
-    <button>Teasing & laughing 😄</button>
-    <button>Deep conversations 🌌</button>
+    <button class="option-btn">
+      <span class="emoji">🌷</span>
+      <span class="text">Soft & peaceful</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">😄</span>
+      <span class="text">Teasing & laughing</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🌌</span>
+      <span class="text">Deep conversations</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 5 -->
+<!-- STEP 5: What Matters -->
 <div class="step" id="step-5">
-  <h2>What matters most? 🤍</h2>
+  <div class="emoji-float">🤍</div>
+  <h2 class="glow-text">What matters most?</h2>
   <div class="options">
-    <button>Honesty always</button>
-    <button>Respecting goals</button>
-    <button>Consistency</button>
+    <button class="option-btn">
+      <span class="emoji">✨</span>
+      <span class="text">Honesty always</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🎯</span>
+      <span class="text">Respecting goals</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🔄</span>
+      <span class="text">Consistency</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 6 -->
+<!-- STEP 6: Would You Rather Game -->
 <div class="step" id="step-6">
-  <h2>Would you rather? 🎮 (Game 1)</h2>
+  <div class="game-badge">Game 1 🎮</div>
+  <div class="emoji-float">🌅</div>
+  <h2 class="glow-text">Would you rather?</h2>
   <div class="options">
-    <button>Beach sunset date 🌅</button>
-    <button>Rain + chai + music 🌧️</button>
+    <button class="option-btn game-option">
+      <span class="emoji">🌅</span>
+      <span class="text">Beach sunset date</span>
+    </button>
+    <button class="option-btn game-option">
+      <span class="emoji">🌧️</span>
+      <span class="text">Rain + chai + music</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 7 -->
+<!-- STEP 7: Teasing Game -->
 <div class="step" id="step-7">
-  <h2>Quick Game ⚡</h2>
-  <p>If I tease you too much… what happens?</p>
+  <div class="game-badge">Game 2 ⚡</div>
+  <div class="emoji-float">😏</div>
+  <h2 class="glow-text">Quick Game</h2>
+  <p class="game-question">If I tease you too much... what happens?</p>
   <div class="options">
-    <button>You ignore me 😑</button>
-    <button>You tease back 😏</button>
-    <button>"Saaf kar dungi" 😂</button>
+    <button class="option-btn game-option">
+      <span class="emoji">😑</span>
+      <span class="text">You ignore me</span>
+    </button>
+    <button class="option-btn game-option">
+      <span class="emoji">😏</span>
+      <span class="text">You tease back</span>
+    </button>
+    <button class="option-btn game-option">
+      <span class="emoji">😂</span>
+      <span class="text">"Saaf kar dungi"</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 8 -->
+<!-- STEP 8: Memory Match Game -->
 <div class="step" id="step-8">
-  <h2>Serious question 🌱</h2>
-  <div class="options">
-    <button>Grow individually & together</button>
-    <button>See where life takes us</button>
-    <button>Keep things light</button>
+  <div class="game-badge">Game 3 🎴</div>
+  <div class="emoji-float">💝</div>
+  <h2 class="glow-text">Memory Match!</h2>
+  <p class="game-question">Find the matching pairs 💕</p>
+  <div class="memory-game">
+    <div class="memory-card" data-pair="1">
+      <div class="card-front">?</div>
+      <div class="card-back">☕</div>
+    </div>
+    <div class="memory-card" data-pair="2">
+      <div class="card-front">?</div>
+      <div class="card-back">🌙</div>
+    </div>
+    <div class="memory-card" data-pair="3">
+      <div class="card-front">?</div>
+      <div class="card-back">🎢</div>
+    </div>
+    <div class="memory-card" data-pair="1">
+      <div class="card-front">?</div>
+      <div class="card-back">☕</div>
+    </div>
+    <div class="memory-card" data-pair="2">
+      <div class="card-front">?</div>
+      <div class="card-back">🌙</div>
+    </div>
+    <div class="memory-card" data-pair="3">
+      <div class="card-front">?</div>
+      <div class="card-back">🎢</div>
+    </div>
   </div>
+  <div class="game-status">Matches: <span id="matchCount">0</span>/3</div>
 </div>
 
-<!-- STEP 9 -->
+<!-- STEP 9: Serious Question -->
 <div class="step" id="step-9">
-  <h2>If something bothers you…</h2>
+  <div class="emoji-float">🌱</div>
+  <h2 class="glow-text">Serious question</h2>
   <div class="options">
-    <button>Tell directly</button>
-    <button>Need little time</button>
-    <button>Stay quiet first</button>
+    <button class="option-btn">
+      <span class="emoji">🌟</span>
+      <span class="text">Grow individually & together</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🛤️</span>
+      <span class="text">See where life takes us</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🎈</span>
+      <span class="text">Keep things light</span>
+    </button>
   </div>
 </div>
 
-<!-- STEP 10 -->
+<!-- STEP 10: Communication -->
 <div class="step" id="step-10">
-  <h2>Final playful check 😌</h2>
-  <p>Did I pass vibe-check phase 1?</p>
+  <div class="emoji-float">💬</div>
+  <h2 class="glow-text">If something bothers you...</h2>
   <div class="options">
-    <button>Yes 😁</button>
-    <button>Maybe 🤭</button>
-    <button>Work in progress 😌</button>
+    <button class="option-btn">
+      <span class="emoji">🗣️</span>
+      <span class="text">Tell directly</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">⏰</span>
+      <span class="text">Need little time</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🤫</span>
+      <span class="text">Stay quiet first</span>
+    </button>
+  </div>
+</div>
+
+<!-- STEP 11: Vibe Check Final -->
+<div class="step" id="step-11">
+  <div class="emoji-float">😌</div>
+  <h2 class="glow-text">Final playful check</h2>
+  <p class="game-question">Did I pass vibe-check phase 1?</p>
+  <div class="options">
+    <button class="option-btn">
+      <span class="emoji">😁</span>
+      <span class="text">Yes</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">🤭</span>
+      <span class="text">Maybe</span>
+    </button>
+    <button class="option-btn">
+      <span class="emoji">😌</span>
+      <span class="text">Work in progress</span>
+    </button>
   </div>
 </div>
 
 <!-- FINAL STEP -->
-<div class="step" id="step-11">
-  <h2 id="finalMessage"></h2>
-  <p>
-  I don’t want something rushed.<br>
-  I don’t want something casual.<br><br>
-  I just want something honest and steady.
-  </p>
+<div class="step" id="step-12">
+  <div class="hearts-animation">
+    <div class="heart">💕</div>
+    <div class="heart">💕</div>
+    <div class="heart">💕</div>
+    <div class="heart">💕</div>
+    <div class="heart">💕</div>
+  </div>
+  
+  <div class="final-message">
+    <h2 id="finalMessage" class="final-name"></h2>
+    <div class="message-content">
+      <p class="reveal-text">I don't want something rushed.</p>
+      <p class="reveal-text">I don't want something casual.</p>
+      <p class="reveal-text">I just want something honest and steady.</p>
+    </div>
 
-  <h1>Would you like to try this with me? 🤍</h1>
-  <p>(Slowly. Seriously. Properly.)</p>
+    <h1 class="final-question">Would you like to try this with me? 🤍</h1>
+    <p class="final-sub">(Slowly. Seriously. Properly.)</p>
 
-  <button id="yesBtn">Yes 💛</button>
-  <button id="noBtn">Let me think 🙈</button>
+    <div class="final-buttons">
+      <button id="yesBtn" class="btn-yes">
+        <span>Yes 💛</span>
+        <div class="btn-shine"></div>
+      </button>
+      <button id="noBtn" class="btn-maybe">Let me think 🙈</button>
+    </div>
+  </div>
+
+  <!-- Confetti for "Yes" -->
+  <canvas id="confetti"></canvas>
 </div>
 
 </div>
