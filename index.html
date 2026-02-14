@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Someone Special ❤️</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+    <div class="card" id="card">
+
+      <div class="step active" id="step-1">
+        <h2>Hey You 💕</h2>
+        <p>I have something important to ask you...</p>
+        <button onclick="nextStep()">Start</button>
+      </div>
+
+      <div class="step" id="step-2">
+        <h2>Pick our ideal date 🌸</h2>
+        <div class="options">
+          <button onclick="selectAnswer('date','candle')">Candlelight Dinner 🕯️</button>
+          <button onclick="selectAnswer('date','movie')">Movie Night 🎬</button>
+          <button onclick="selectAnswer('date','longdrive')">Long Drive 🌙</button>
+        </div>
+      </div>
+
+      <div class="step" id="step-3">
+        <h2>Choose a vibe 💖</h2>
+        <div class="options">
+          <button onclick="selectAnswer('vibe','soft')">Soft & Romantic 🌷</button>
+          <button onclick="selectAnswer('vibe','funny')">Fun & Silly 😄</button>
+          <button onclick="selectAnswer('vibe','deep')">Deep & Meaningful 🌌</button>
+        </div>
+      </div>
+
+      <div class="step" id="final-step">
+        <h2 id="final-message"></h2>
+        <div class="proposal">
+          <p>So... 💌</p>
+          <h1>Will You Be My Valentine?</h1>
+          <div class="final-buttons">
+            <button class="yes">YES 💘</button>
+            <button class="no">No 🙈</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
