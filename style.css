@@ -887,7 +887,9 @@ input:focus + .input-glow {
 }
 
 .girl-helicopter .vehicle {
-  animation: helicopterRotor 0.3s linear infinite;
+  animation: helicopterRotor 0.15s linear infinite;
+  display: inline-block;
+  transform-origin: center center;
 }
 
 @keyframes helicopterFly {
@@ -914,14 +916,17 @@ input:focus + .input-glow {
 }
 
 @keyframes helicopterRotor {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: scaleY(1); }
+  25% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+  75% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
 }
 
 .boy-train {
   position: absolute;
   bottom: 20%;
-  left: -200px;
+  right: -200px;
   font-size: 40px;
   display: flex;
   align-items: center;
@@ -932,7 +937,7 @@ input:focus + .input-glow {
 
 @keyframes trainMove {
   0% {
-    left: -200px;
+    right: -200px;
     transform: translateY(0);
   }
   48% {
@@ -945,7 +950,7 @@ input:focus + .input-glow {
     transform: translateY(0);
   }
   100% {
-    left: 110%;
+    right: 110%;
     transform: translateY(0);
   }
 }
