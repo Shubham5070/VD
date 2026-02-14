@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let flippedCards = [];
   let matchedPairs = 0;
   let canFlip = true;
+  let gameTimer = null;
+  let gameSeconds = 0;
+  let gameCompleted = false;
   
   // Update progress bar
   function updateProgress() {
@@ -114,6 +117,22 @@ document.addEventListener("DOMContentLoaded", function () {
     matchedPairs = 0;
     flippedCards = [];
     canFlip = true;
+    gameSeconds = 0;
+    gameCompleted = false;
+    
+    // Reset and start timer
+    document.getElementById('gameTimer').textContent = '0:00';
+    if (gameTimer) clearInterval(gameTimer);
+    
+    gameTimer = setInterval(() => {
+      if (!gameCompleted) {
+        gameSeconds++;
+        const minutes = Math.floor(gameSeconds / 60);
+        const seconds = gameSeconds % 60;
+        document.getElementById('gameTimer').textContent = 
+          `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }
+    }, 1000);
     
     // Shuffle cards
     const cardsArray = Array.from(cards);
@@ -128,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     document.getElementById('matchCount').textContent = '0';
+    document.getElementById('shayariReward').style.display = 'none';
   }
   
   function flipCard() {
@@ -164,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (matchedPairs === 3) {
           setTimeout(() => {
             celebrate();
-            setTimeout(nextStep, 1500);
           }, 500);
         }
       }, 600);
@@ -180,15 +199,53 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   
   function celebrate() {
+    // Stop timer
+    gameCompleted = true;
+    if (gameTimer) clearInterval(gameTimer);
+    
     // Add celebration effect to game status
     const status = document.querySelector('.game-status');
     status.innerHTML = '🎉 Perfect! All matched! 🎉';
     status.style.animation = 'pulse 0.5s ease 3';
     
-    // Show shayari reward
+    // Show shayari reward with different messages based on time
     setTimeout(() => {
       const shayariReward = document.getElementById('shayariReward');
+      const resultText = document.getElementById('gameResultText');
+      const continueBtn = document.getElementById('continueAfterGame');
+      
+      let message = '';
+      
+      // Fast completion (under 20 seconds)
+      if (gameSeconds < 20) {
+        message = `"Dimaag toh pehle se sharp tha,<br>
+                   Ab dil bhi jeet liya tune... 💕<br>
+                   <span style="font-size: 16px; opacity: 0.8;">Woh bhi sirf ${gameSeconds} seconds mein! 🔥</span><br>
+                   <span style="font-size: 14px; opacity: 0.8;">P.S. - Ab zara humble bhi raho thoda 😏</span>"`;
+      }
+      // Medium completion (20-40 seconds)
+      else if (gameSeconds < 40) {
+        message = `"Smart toh ho hi,<br>
+                   Bas thoda time leti ho sochne mein 😄<br>
+                   <span style="font-size: 16px; opacity: 0.8;">But ${gameSeconds} seconds is still impressive! 💕</span><br>
+                   <span style="font-size: 14px; opacity: 0.8;">P.S. - Next time aur fast try karna 😌</span>"`;
+      }
+      // Slow completion (over 40 seconds)
+      else {
+        message = `"${gameSeconds} seconds? Really? 😂<br>
+                   Koi nahi, dil jeetna zyada important hai na 💕<br>
+                   <span style="font-size: 14px; opacity: 0.8;">Memory game mein thoda weak ho, par tumhara charm strong hai 😏</span><br>
+                   <span style="font-size: 14px; opacity: 0.8;">P.S. - Practice karte rahna! 🎮</span>"`;
+      }
+      
+      resultText.innerHTML = message;
       shayariReward.style.display = 'block';
+      
+      // Show continue button after delay to give time to read
+      setTimeout(() => {
+        continueBtn.style.display = 'block';
+      }, 4000); // 4 seconds to read the shayari
+      
     }, 800);
   }
   
@@ -225,6 +282,11 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       document.querySelector('.final-buttons').appendChild(successMsg);
     }, 1000);
+  });
+  
+  // Continue button after memory game
+  document.getElementById('continueAfterGame').addEventListener('click', function() {
+    nextStep();
   });
   
   // Playful "Let me think" button - runs away!

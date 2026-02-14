@@ -425,6 +425,32 @@ input:focus + .input-glow {
   50% { transform: scale(1.05); }
 }
 
+/* Game timer */
+.game-timer {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 15px 0;
+  padding: 10px 20px;
+  background: rgba(255, 107, 157, 0.1);
+  border-radius: 15px;
+  display: inline-block;
+  width: 100%;
+}
+
+.timer-label {
+  opacity: 0.7;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+#gameTimer {
+  font-family: 'DM Sans', monospace;
+  font-size: 24px;
+  color: var(--secondary);
+}
+
 /* Memory Game */
 .memory-game {
   display: grid;
@@ -544,6 +570,31 @@ input:focus + .input-glow {
   line-height: 1.6;
   margin: 0;
   font-weight: 600;
+}
+
+/* Continue button after game */
+.continue-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 20px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow);
+}
+
+.continue-btn:active {
+  transform: scale(0.95);
 }
 
 /* Name selection buttons */

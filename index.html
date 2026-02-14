@@ -175,6 +175,13 @@
   <div class="emoji-float">💝</div>
   <h2 class="glow-text">Memory Match!</h2>
   <p class="game-question">Find the matching pairs 💕</p>
+  
+  <!-- Timer -->
+  <div class="game-timer">
+    <span class="timer-label">Time:</span>
+    <span id="gameTimer">0:00</span>
+  </div>
+  
   <div class="memory-game">
     <div class="memory-card" data-pair="1">
       <div class="card-front">?</div>
@@ -206,12 +213,11 @@
   <!-- Shayari reward (hidden initially) -->
   <div class="shayari-reward" id="shayariReward" style="display: none;">
     <div class="shayari-box">
-      <p class="shayari-text">
-        "Dimaag toh pehle se sharp tha,<br>
-        Ab dil bhi jeet liya tune... 💕<br>
-        <span style="font-size: 14px; opacity: 0.8;">P.S. - Ab zara humble bhi raho thoda 😏</span>"
-      </p>
+      <p class="shayari-text" id="gameResultText"></p>
     </div>
+    <button class="continue-btn" id="continueAfterGame" style="display: none;">
+      Continue ✨
+    </button>
   </div>
 </div>
 
