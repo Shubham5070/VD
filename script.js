@@ -1060,22 +1060,28 @@ document.addEventListener("DOMContentLoaded", function () {
   
   document.getElementById('reactionBtn').addEventListener('click', startReactionGame);
   
-  document.getElementById('continueAfterReaction').addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('Continue button clicked!');
-    
-    // Force clear any remaining box interactions
-    const box = document.getElementById('reactionBox');
-    if (box) {
-      box.onclick = null;
-      box.style.pointerEvents = 'none';
-    }
-    
-    // Always proceed to next step
-    console.log('Calling nextStep...');
-    nextStep();
-  });
+  const continueReactionBtn = document.getElementById('continueAfterReaction');
+  if (continueReactionBtn) {
+    continueReactionBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Continue button clicked!');
+      console.log('typeof nextStep:', typeof nextStep);
+      
+      // Force clear any remaining box interactions
+      const box = document.getElementById('reactionBox');
+      if (box) {
+        box.onclick = null;
+        box.style.pointerEvents = 'none';
+      }
+      
+      // Always proceed to next step
+      console.log('Calling nextStep...');
+      nextStep();
+    });
+  } else {
+    console.error('Continue button not found!');
+  }
   
   function startReactionGame() {
     const box = document.getElementById('reactionBox');
@@ -1163,3 +1169,4 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     }, waitTime);
   }
+;
