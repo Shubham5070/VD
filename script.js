@@ -794,12 +794,18 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".options button").forEach(btn => {
     btn.addEventListener("click", function () {
       // Skip if this is the memory game step
-      if (currentStep === 8) return;
+      const currentActive = document.querySelector('.step.active');
+      const stepId = currentActive ? currentActive.id : '';
       
-      let questionNumber = currentStep;
-      answers["q" + questionNumber] = this.querySelector('.text') 
+      if (stepId === 'game-2') return;
+      
+      // Get the answer text
+      const answerText = this.querySelector('.text') 
         ? this.querySelector('.text').innerText 
         : this.innerText;
+      
+      // Store with the actual step ID as key
+      answers[stepId] = answerText;
       
       // Add selected animation
       this.style.transform = 'scale(1.1)';
@@ -972,20 +978,20 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     
-    // Prepare data to send to Supabase
+    // Prepare data to send to Supabase with correct step IDs
     const data = {
       name: answers.name || 'Not provided',
       quiz_score: quizScore || 0,
-      calm_place: answers.q2 || null,
-      coffee_rule: answers.q3 || null,
-      vibe: answers.q4 || null,
-      bike_preference: answers['q4-5'] || null,
-      food_mood: answers['q4-6'] || null,
-      late_night: answers['q4-7'] || null,
-      what_matters: answers.q5 || null,
-      serious_question: answers.q9 || null,
-      communication: answers.q10 || null,
-      vibe_check: answers.q11 || null,
+      calm_place: answers['step-2'] || null,
+      coffee_rule: answers['step-3'] || null,
+      vibe: answers['step-4'] || null,
+      bike_preference: answers['step-4-5'] || null,
+      food_mood: answers['step-4-6'] || null,
+      late_night: answers['step-4-7'] || null,
+      what_matters: answers['step-5'] || null,
+      serious_question: answers['step-9'] || null,
+      communication: answers['step-10'] || null,
+      vibe_check: answers['step-11'] || null,
       final_answer: 'Yes',
       all_responses: answers
     };
