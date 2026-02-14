@@ -326,20 +326,24 @@
   <h2 class="glow-text">Reaction Speed!</h2>
   <p class="game-question">Click the button as FAST as you can when it turns green! ⚡</p>
   
-  <div class="reaction-game">
-    <div class="reaction-box" id="reactionBox">
-      <p class="reaction-text" id="reactionText">Click START to begin</p>
+  <div class="reaction-game-container">
+    <div class="reaction-game">
+      <div class="reaction-box" id="reactionBox">
+        <p class="reaction-text" id="reactionText">Click START to begin</p>
+      </div>
+      <button class="reaction-btn" id="reactionBtn">START</button>
+      <div class="reaction-result" id="reactionResult" style="display: none;">
+        <p class="reaction-time">Your time: <span id="reactionTime">0</span>ms</p>
+        <p class="reaction-message" id="reactionMessage"></p>
+      </div>
     </div>
-    <button class="reaction-btn" id="reactionBtn">START</button>
-    <div class="reaction-result" id="reactionResult" style="display: none;">
-      <p class="reaction-time">Your time: <span id="reactionTime">0</span>ms</p>
-      <p class="reaction-message" id="reactionMessage"></p>
+    
+    <div class="continue-section">
+      <button class="continue-btn" id="continueAfterReaction" style="display: none;">
+        Continue ✨
+      </button>
     </div>
   </div>
-  
-  <button class="continue-btn" id="continueAfterReaction" style="display: none;">
-    Continue ✨
-  </button>
 </div>
 
 <!-- GAME 2: Memory Match Game -->

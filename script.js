@@ -1037,12 +1037,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Reaction game
   let reactionStartTime = 0;
   let reactionTimeout = null;
-  let reactionAttempts = 0;
   let reactionCompleted = false;
+  let reactionInProgress = false;
   
   document.getElementById('reactionBtn').addEventListener('click', startReactionGame);
-  document.getElementById('continueAfterReaction').addEventListener('click', () => {
+  document.getElementById('continueAfterReaction').addEventListener('click', function() {
+    console.log('Continue clicked, reactionCompleted:', reactionCompleted);
     if (reactionCompleted) {
+      // Force clear any remaining box interactions
+      const box = document.getElementById('reactionBox');
+      box.onclick = null;
+      box.style.pointerEvents = 'none';
       nextStep();
     }
   });
@@ -1056,33 +1061,48 @@ document.addEventListener("DOMContentLoaded", function () {
     
     btn.disabled = true;
     result.style.display = 'none';
+    reactionInProgress = true;
     
-    // Don't hide continue button if already completed once
-    if (!reactionCompleted) {
-      continueBtn.style.display = 'none';
-    }
+    // Enable box interaction
+    box.style.pointerEvents = 'auto';
     
     // Red phase - wait
     box.className = 'reaction-box';
     box.style.background = 'linear-gradient(135deg, #f44336, #e57373)';
     text.textContent = 'Wait for it...';
-    box.onclick = () => {
-      // Clicked too early
-      text.textContent = 'Too early! 😂 Try again!';
-      btn.disabled = false;
-      if (reactionTimeout) clearTimeout(reactionTimeout);
+    
+    let tooEarly = false;
+    
+    box.onclick = function() {
+      if (reactionInProgress && !tooEarly) {
+        // Clicked too early
+        tooEarly = true;
+        text.textContent = 'Too early! 😂 Try again!';
+        btn.disabled = false;
+        reactionInProgress = false;
+        if (reactionTimeout) {
+          clearTimeout(reactionTimeout);
+          reactionTimeout = null;
+        }
+        // Disable box until restart
+        box.style.pointerEvents = 'none';
+      }
     };
     
     // Wait random time (2-5 seconds)
     const waitTime = Math.random() * 3000 + 2000;
     
     reactionTimeout = setTimeout(() => {
+      if (!reactionInProgress) return; // Exit if user clicked too early
+      
       // Green phase - GO!
       box.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
       text.textContent = 'CLICK NOW! ⚡';
       reactionStartTime = Date.now();
       
-      box.onclick = () => {
+      box.onclick = function() {
+        if (!reactionInProgress) return;
+        
         const reactionTime = Date.now() - reactionStartTime;
         document.getElementById('reactionTime').textContent = reactionTime;
         
@@ -1100,15 +1120,21 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('reactionMessage').innerHTML = message;
         result.style.display = 'block';
         
+        // Disable box interaction completely
         box.onclick = null;
+        box.style.pointerEvents = 'none';
         box.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
         text.textContent = 'Done! ✨';
+        
         btn.textContent = 'Try Again?';
         btn.disabled = false;
+        reactionInProgress = false;
         
         // Mark as completed and show continue button
         reactionCompleted = true;
         continueBtn.style.display = 'block';
+        
+        console.log('Game completed, continue button shown');
       };
     }, waitTime);
   }
