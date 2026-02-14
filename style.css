@@ -871,6 +871,7 @@ input:focus + .input-glow {
   height: 100%;
   pointer-events: none;
   overflow: hidden;
+  z-index: 1;
 }
 
 .girl-helicopter {
@@ -1011,7 +1012,7 @@ input:focus + .input-glow {
 
 .final-message {
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 
 .final-name {
