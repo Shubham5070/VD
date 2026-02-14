@@ -341,51 +341,109 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('.progress-fill').style.width = progress + '%';
   }
   
+  // Chopper animation between sections
+  function showChopperTransition(nextSectionText, callback) {
+    const chopper = document.getElementById('chopperTransition');
+    const text = document.getElementById('chopperText');
+    
+    text.textContent = nextSectionText;
+    chopper.classList.add('active');
+    
+    // Remove after animation completes
+    setTimeout(() => {
+      chopper.classList.remove('active');
+      if (callback) callback();
+    }, 2200);
+  }
+  
   // Show step with animation
   function showStep(stepId) {
     const allSteps = document.querySelectorAll(".step");
     
-    // Remove active class with fade out
-    allSteps.forEach(s => {
-      if (s.classList.contains('active')) {
-        s.style.animation = 'slideOut 0.4s ease forwards';
-        setTimeout(() => {
-          s.classList.remove("active");
-          s.style.animation = '';
-        }, 400);
-      }
-    });
+    // Check if transitioning between sections (show chopper)
+    const currentActive = document.querySelector('.step.active');
+    const currentId = currentActive ? currentActive.id : '';
     
-    // Show new step after delay
-    setTimeout(() => {
-      let newStep;
-      if (typeof stepId === 'string') {
-        newStep = document.getElementById(stepId);
-      } else {
-        newStep = document.getElementById("step-" + stepId);
-        currentStep = stepId;
-      }
+    let needsChopperTransition = false;
+    let chopperText = '';
+    
+    // Define section transitions
+    if (currentId === 'step-1' && stepId === 'section-1-intro') {
+      needsChopperTransition = true;
+      chopperText = 'Section 1: Getting to Know You 💫';
+    } else if (currentId === 'step-5' && stepId === 'section-2-intro') {
+      needsChopperTransition = true;
+      chopperText = 'Section 2: The Confusion Quiz! 🧠';
+    } else if (currentId === 'quiz-result' && stepId === 'section-3-intro') {
+      needsChopperTransition = true;
+      chopperText = 'Section 3: Game Time! 🎮';
+    } else if (currentId === 'game-2' && stepId === 'step-9') {
+      needsChopperTransition = true;
+      chopperText = 'Final Questions 💕';
+    }
+    
+    if (needsChopperTransition) {
+      // Fade out current step
+      allSteps.forEach(s => {
+        if (s.classList.contains('active')) {
+          s.style.animation = 'slideOut 0.4s ease forwards';
+          setTimeout(() => {
+            s.classList.remove("active");
+            s.style.animation = '';
+          }, 400);
+        }
+      });
       
-      if (newStep) {
-        newStep.classList.add("active");
-        updateProgress();
-        
-        // Initialize memory game if on that step
-        if (stepId === 'game-2') {
-          initMemoryGame();
+      // Show chopper, then show next step
+      setTimeout(() => {
+        showChopperTransition(chopperText, () => {
+          const newStep = document.getElementById(stepId);
+          if (newStep) {
+            newStep.classList.add("active");
+            initializeStep(stepId);
+          }
+        });
+      }, 450);
+    } else {
+      // Normal transition without chopper
+      allSteps.forEach(s => {
+        if (s.classList.contains('active')) {
+          s.style.animation = 'slideOut 0.4s ease forwards';
+          setTimeout(() => {
+            s.classList.remove("active");
+            s.style.animation = '';
+          }, 400);
         }
-        
-        // Display quiz question if on quiz step
-        if (stepId === 'quiz-step') {
-          displayQuizQuestion();
+      });
+      
+      setTimeout(() => {
+        const newStep = document.getElementById(stepId);
+        if (newStep) {
+          newStep.classList.add("active");
+          initializeStep(stepId);
         }
-        
-        // Trigger heart animation on final step
-        if (stepId === 12 || stepId === 'step-12') {
-          setTimeout(generateFinalMessage, 500);
-        }
-      }
-    }, 450);
+      }, 450);
+    }
+  }
+  
+  // Initialize step (separated for reuse)
+  function initializeStep(stepId) {
+    updateProgress();
+    
+    // Initialize memory game if on that step
+    if (stepId === 'game-2') {
+      initMemoryGame();
+    }
+    
+    // Display quiz question if on quiz step
+    if (stepId === 'quiz-step') {
+      displayQuizQuestion();
+    }
+    
+    // Trigger heart animation on final step
+    if (stepId === 'step-12') {
+      setTimeout(generateFinalMessage, 500);
+    }
   }
   
   function nextStep() {
@@ -939,16 +997,20 @@ document.addEventListener("DOMContentLoaded", function () {
   let reactionAttempts = 0;
   
   document.getElementById('reactionBtn').addEventListener('click', startReactionGame);
-  document.getElementById('continueAfterReaction').addEventListener('click', () => nextStep());
+  document.getElementById('continueAfterReaction').addEventListener('click', () => {
+    nextStep();
+  });
   
   function startReactionGame() {
     const box = document.getElementById('reactionBox');
     const text = document.getElementById('reactionText');
     const btn = document.getElementById('reactionBtn');
     const result = document.getElementById('reactionResult');
+    const continueBtn = document.getElementById('continueAfterReaction');
     
     btn.disabled = true;
     result.style.display = 'none';
+    continueBtn.style.display = 'none';
     
     // Red phase - wait
     box.className = 'reaction-box';
@@ -958,7 +1020,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Clicked too early
       text.textContent = 'Too early! 😂 Try again!';
       btn.disabled = false;
-      reactionTimeout && clearTimeout(reactionTimeout);
+      if (reactionTimeout) clearTimeout(reactionTimeout);
     };
     
     // Wait random time (2-5 seconds)
@@ -994,10 +1056,8 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.textContent = 'Try Again?';
         btn.disabled = false;
         
-        // Show continue button
-        setTimeout(() => {
-          document.getElementById('continueAfterReaction').style.display = 'block';
-        }, 2000);
+        // Show continue button immediately
+        continueBtn.style.display = 'block';
       };
     }, waitTime);
   }
