@@ -1,86 +1,96 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-.container {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
+.container{
+width:100%;
+max-width:420px;
+padding:20px;
 }
 
-.card {
-  background: white;
-  border-radius: 25px;
-  padding: 30px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+.card{
+background:white;
+padding:30px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
-h1 {
-  font-family: 'Pacifico', cursive;
-  color: #ff4f81;
-  margin: 15px 0;
+h1{
+font-family:'Pacifico',cursive;
+color:#ff4f81;
+margin:15px 0;
 }
 
-h2 {
-  color: #ff4f81;
-  margin-bottom: 15px;
+h2{
+color:#ff4f81;
+margin-bottom:15px;
 }
 
-p {
-  margin-bottom: 20px;
-  color: #555;
+p{
+margin-bottom:20px;
+color:#555;
 }
 
-button {
-  padding: 12px 18px;
-  margin: 8px;
-  border: none;
-  border-radius: 25px;
-  background: #ff4f81;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
+input{
+width:100%;
+padding:10px;
+border-radius:20px;
+border:1px solid #ddd;
+margin-bottom:15px;
+text-align:center;
 }
 
-button:hover {
-  transform: scale(1.05);
+button{
+padding:12px 18px;
+margin:8px;
+border:none;
+border-radius:25px;
+background:#ff4f81;
+color:white;
+cursor:pointer;
+transition:0.3s;
 }
 
-.options {
-  display: flex;
-  flex-direction: column;
+button:hover{
+transform:scale(1.05);
 }
 
-.step {
-  display: none;
-  animation: fade 0.5s ease forwards;
+.options{
+display:flex;
+flex-direction:column;
 }
 
-.step.active {
-  display: block;
+.step{
+display:none;
+animation:fade 0.5s ease forwards;
 }
 
-.yes {
-  background: #28c76f;
+.step.active{
+display:block;
 }
 
-.no {
-  background: #ea5455;
+.yes{
+background:#28c76f;
 }
 
-@keyframes fade {
-  from {opacity: 0; transform: translateY(15px);}
-  to {opacity: 1; transform: translateY(0);}
+.no{
+background:#ea5455;
+position:relative;
+}
+
+@keyframes fade{
+from{opacity:0; transform:translateY(15px);}
+to{opacity:1; transform:translateY(0);}
 }
