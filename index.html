@@ -3,44 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For Someone Special ❤️</title>
+  <title>For The Girl Near Sarakki Lake ❤️</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <div class="container">
-    <div class="card" id="card">
+    <div class="card">
 
+      <!-- STEP 1 -->
       <div class="step active" id="step-1">
-        <h2>Hey You 💕</h2>
-        <p>I have something important to ask you...</p>
-        <button onclick="nextStep()">Start</button>
+        <h2>Hey Miss Simple & Unpredictable 🌸</h2>
+        <p>You once said I never properly asked you something...</p>
+        <button onclick="nextStep()">Continue 💌</button>
       </div>
 
+      <!-- STEP 2 -->
       <div class="step" id="step-2">
-        <h2>Pick our ideal date 🌸</h2>
+        <h2>Ideal Date Near Sarakki Lake? 🌊</h2>
         <div class="options">
-          <button onclick="selectAnswer('date','candle')">Candlelight Dinner 🕯️</button>
-          <button onclick="selectAnswer('date','movie')">Movie Night 🎬</button>
-          <button onclick="selectAnswer('date','longdrive')">Long Drive 🌙</button>
+          <button onclick="selectAnswer('date','run')">Morning Run Together 🏃</button>
+          <button onclick="selectAnswer('date','badminton')">Badminton Match 🏸</button>
+          <button onclick="selectAnswer('date','lake')">Silent Walk Near Lake 🌅</button>
         </div>
       </div>
 
+      <!-- STEP 3 -->
       <div class="step" id="step-3">
-        <h2>Choose a vibe 💖</h2>
+        <h2>Dinner Plan? 🍽️</h2>
         <div class="options">
-          <button onclick="selectAnswer('vibe','soft')">Soft & Romantic 🌷</button>
-          <button onclick="selectAnswer('vibe','funny')">Fun & Silly 😄</button>
-          <button onclick="selectAnswer('vibe','deep')">Deep & Meaningful 🌌</button>
+          <button onclick="selectAnswer('food','mushroom')">Mushroom Dish 🍄</button>
+          <button onclick="selectAnswer('food','ghar')">Simple Ghar Ka Khana 🏡</button>
+          <button onclick="selectAnswer('food','chocolate')">Just Chocolate Date 🍫</button>
         </div>
       </div>
 
+      <!-- STEP 4 -->
+      <div class="step" id="step-4">
+        <h2>Evening Scene? 🎬</h2>
+        <div class="options">
+          <button onclick="selectAnswer('evening','series')">Watch Stranger Things Together 👀</button>
+          <button onclick="selectAnswer('evening','sing')">You Sing, I Listen 🎵</button>
+          <button onclick="selectAnswer('evening','talk')">Deep Life Talk 🌌</button>
+        </div>
+      </div>
+
+      <!-- FINAL -->
       <div class="step" id="final-step">
         <h2 id="final-message"></h2>
+
         <div class="proposal">
-          <p>So... 💌</p>
+          <p>And now properly asking... 💕</p>
           <h1>Will You Be My Valentine?</h1>
+
           <div class="final-buttons">
             <button class="yes">YES 💘</button>
             <button class="no">No 🙈</button>
